@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="Character" load_steps=22 format=3 uid="uid://bjj6ohjx4fvpc"]
+
+[ext_resource type="Resource" uid="uid://64xytu2x2fje" path="res://Data/System/Attributes/Strength.tres" id="1_6hbhp"]
+[ext_resource type="Resource" uid="uid://bsqyppqn57bjb" path="res://Data/System/Attributes/Agility.tres" id="2_4yfjs"]
+[ext_resource type="Resource" uid="uid://neu5cec3pdkx" path="res://Data/System/Attributes/Wits.tres" id="3_l6di6"]
+[ext_resource type="Resource" uid="uid://drjx8ch7bwhkv" path="res://Data/System/Attributes/Empathy.tres" id="4_r6vx5"]
+[ext_resource type="Script" path="res://Scripts/ResourceScripts/Game/Character/character.gd" id="5_wjs5s"]
+[ext_resource type="Resource" uid="uid://7w2nmacp6ok7" path="res://Data/System/Skills/Strength/Might.tres" id="6_g1xck"]
+[ext_resource type="Resource" uid="uid://b2lrt61tgvd0i" path="res://Data/System/Skills/Strength/Endurance.tres" id="7_vav2e"]
+[ext_resource type="Resource" uid="uid://dvt1jsntj6c20" path="res://Data/System/Skills/Strength/Melee.tres" id="8_7j8l1"]
+[ext_resource type="Resource" uid="uid://u36co6voaulo" path="res://Data/System/Skills/Strength/Crafting.tres" id="9_b47np"]
+[ext_resource type="Resource" uid="uid://44cul8kaohor" path="res://Data/System/Skills/Agility/Stealth.tres" id="10_eo5cg"]
+[ext_resource type="Resource" uid="uid://xt4xf7d7fkgc" path="res://Data/System/Skills/Agility/SleightOfHand.tres" id="11_47m7t"]
+[ext_resource type="Resource" uid="uid://du7bneh1d4nmd" path="res://Data/System/Skills/Agility/Move.tres" id="12_hc65k"]
+[ext_resource type="Resource" uid="uid://c1jspfnernth4" path="res://Data/System/Skills/Agility/Marksmanship.tres" id="13_7ykq0"]
+[ext_resource type="Resource" uid="uid://66drhos6ii3p" path="res://Data/System/Skills/Wits/Scouting.tres" id="14_nqg4y"]
+[ext_resource type="Resource" uid="uid://bf3llv035c4il" path="res://Data/System/Skills/Wits/Lore.tres" id="15_q3lq0"]
+[ext_resource type="Resource" uid="uid://b2co2t7ubhfi" path="res://Data/System/Skills/Wits/Survival.tres" id="16_sctwp"]
+[ext_resource type="Resource" uid="uid://dypvn7bgwu3oa" path="res://Data/System/Skills/Wits/Insight.tres" id="17_4tf32"]
+[ext_resource type="Resource" uid="uid://co25eaacvje0e" path="res://Data/System/Skills/Empathy/Manipulation.tres" id="18_coi5f"]
+[ext_resource type="Resource" uid="uid://bk5di70b45ho7" path="res://Data/System/Skills/Empathy/Performance.tres" id="19_l6fdc"]
+[ext_resource type="Resource" uid="uid://c0p1c00n2nxg1" path="res://Data/System/Skills/Empathy/Healing.tres" id="20_2qxgl"]
+[ext_resource type="Resource" uid="uid://bjdxlmdm1bs2s" path="res://Data/System/Skills/Empathy/AnimalHandling.tres" id="21_sgad4"]
+
+[resource]
+resource_name = "Jacob"
+script = ExtResource("5_wjs5s")
+kin = 5
+profession = 4
+attributes = {
+ExtResource("1_6hbhp"): 2,
+ExtResource("2_4yfjs"): 3,
+ExtResource("3_l6di6"): 4,
+ExtResource("4_r6vx5"): 5
+}
+skills = {
+ExtResource("6_g1xck"): 0,
+ExtResource("7_vav2e"): 0,
+ExtResource("8_7j8l1"): 0,
+ExtResource("9_b47np"): 0,
+ExtResource("10_eo5cg"): 0,
+ExtResource("11_47m7t"): 1,
+ExtResource("12_hc65k"): 0,
+ExtResource("13_7ykq0"): 1,
+ExtResource("14_nqg4y"): 0,
+ExtResource("15_q3lq0"): 0,
+ExtResource("16_sctwp"): 0,
+ExtResource("17_4tf32"): 2,
+ExtResource("18_coi5f"): 3,
+ExtResource("19_l6fdc"): 1,
+ExtResource("20_2qxgl"): 1,
+ExtResource("21_sgad4"): 1
+}

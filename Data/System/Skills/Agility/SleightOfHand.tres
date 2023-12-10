@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CharacterSkill" load_steps=3 format=3 uid="uid://xt4xf7d7fkgc"]
+
+[ext_resource type="Resource" uid="uid://bsqyppqn57bjb" path="res://Data/System/Attributes/Agility.tres" id="1_d514x"]
+[ext_resource type="Script" path="res://Scripts/ResourceScripts/Game/Character/character_skill.gd" id="2_3jl5h"]
+
+[resource]
+resource_name = "SleightOfHand"
+script = ExtResource("2_3jl5h")
+associated_attribute = ExtResource("1_d514x")

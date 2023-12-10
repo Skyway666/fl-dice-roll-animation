@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CharacterSkillsArray" load_steps=18 format=3 uid="uid://b7q6qmd5mcfx1"]
+
+[ext_resource type="Resource" uid="uid://7w2nmacp6ok7" path="res://Data/System/Skills/Strength/Might.tres" id="1_uc700"]
+[ext_resource type="Resource" uid="uid://b2lrt61tgvd0i" path="res://Data/System/Skills/Strength/Endurance.tres" id="2_mbjd4"]
+[ext_resource type="Resource" uid="uid://dvt1jsntj6c20" path="res://Data/System/Skills/Strength/Melee.tres" id="3_0rtxh"]
+[ext_resource type="Resource" uid="uid://u36co6voaulo" path="res://Data/System/Skills/Strength/Crafting.tres" id="4_vxfef"]
+[ext_resource type="Resource" uid="uid://44cul8kaohor" path="res://Data/System/Skills/Agility/Stealth.tres" id="5_xssqx"]
+[ext_resource type="Resource" uid="uid://xt4xf7d7fkgc" path="res://Data/System/Skills/Agility/SleightOfHand.tres" id="6_u5dd0"]
+[ext_resource type="Resource" uid="uid://du7bneh1d4nmd" path="res://Data/System/Skills/Agility/Move.tres" id="7_7u7h2"]
+[ext_resource type="Resource" uid="uid://c1jspfnernth4" path="res://Data/System/Skills/Agility/Marksmanship.tres" id="8_83l65"]
+[ext_resource type="Resource" uid="uid://66drhos6ii3p" path="res://Data/System/Skills/Wits/Scouting.tres" id="9_je6k3"]
+[ext_resource type="Resource" uid="uid://bf3llv035c4il" path="res://Data/System/Skills/Wits/Lore.tres" id="10_qaey1"]
+[ext_resource type="Resource" uid="uid://b2co2t7ubhfi" path="res://Data/System/Skills/Wits/Survival.tres" id="11_un0qj"]
+[ext_resource type="Resource" uid="uid://dypvn7bgwu3oa" path="res://Data/System/Skills/Wits/Insight.tres" id="12_4vpfw"]
+[ext_resource type="Resource" uid="uid://co25eaacvje0e" path="res://Data/System/Skills/Empathy/Manipulation.tres" id="13_u37f5"]
+[ext_resource type="Resource" uid="uid://bk5di70b45ho7" path="res://Data/System/Skills/Empathy/Performance.tres" id="14_lyjkr"]
+[ext_resource type="Resource" uid="uid://c0p1c00n2nxg1" path="res://Data/System/Skills/Empathy/Healing.tres" id="15_5lisa"]
+[ext_resource type="Resource" uid="uid://bjdxlmdm1bs2s" path="res://Data/System/Skills/Empathy/AnimalHandling.tres" id="16_qrb31"]
+[ext_resource type="Script" path="res://Scripts/ResourceScripts/Game/Character/DataContainers/character_skills_array.gd" id="17_e7ldr"]
+
+[resource]
+script = ExtResource("17_e7ldr")
+data = Array[Resource("res://Scripts/ResourceScripts/Player/character_skill.gd")]([ExtResource("1_uc700"), ExtResource("2_mbjd4"), ExtResource("3_0rtxh"), ExtResource("4_vxfef"), ExtResource("5_xssqx"), ExtResource("6_u5dd0"), ExtResource("7_7u7h2"), ExtResource("8_83l65"), ExtResource("9_je6k3"), ExtResource("10_qaey1"), ExtResource("11_un0qj"), ExtResource("12_4vpfw"), ExtResource("13_u37f5"), ExtResource("14_lyjkr"), ExtResource("15_5lisa"), ExtResource("16_qrb31")])

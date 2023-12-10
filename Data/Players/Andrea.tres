@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="Character" load_steps=22 format=3 uid="uid://b16n6j8juwfmi"]
+
+[ext_resource type="Resource" uid="uid://64xytu2x2fje" path="res://Data/System/Attributes/Strength.tres" id="1_3qog0"]
+[ext_resource type="Resource" uid="uid://bsqyppqn57bjb" path="res://Data/System/Attributes/Agility.tres" id="2_0tsj2"]
+[ext_resource type="Resource" uid="uid://neu5cec3pdkx" path="res://Data/System/Attributes/Wits.tres" id="3_ynl0v"]
+[ext_resource type="Resource" uid="uid://drjx8ch7bwhkv" path="res://Data/System/Attributes/Empathy.tres" id="4_7o5nj"]
+[ext_resource type="Script" path="res://Scripts/ResourceScripts/Game/Character/character.gd" id="5_6gx6t"]
+[ext_resource type="Resource" uid="uid://7w2nmacp6ok7" path="res://Data/System/Skills/Strength/Might.tres" id="6_tb8a2"]
+[ext_resource type="Resource" uid="uid://b2lrt61tgvd0i" path="res://Data/System/Skills/Strength/Endurance.tres" id="7_6j8js"]
+[ext_resource type="Resource" uid="uid://dvt1jsntj6c20" path="res://Data/System/Skills/Strength/Melee.tres" id="8_ypirv"]
+[ext_resource type="Resource" uid="uid://u36co6voaulo" path="res://Data/System/Skills/Strength/Crafting.tres" id="9_e5t4u"]
+[ext_resource type="Resource" uid="uid://44cul8kaohor" path="res://Data/System/Skills/Agility/Stealth.tres" id="10_10jkj"]
+[ext_resource type="Resource" uid="uid://xt4xf7d7fkgc" path="res://Data/System/Skills/Agility/SleightOfHand.tres" id="11_gm2h7"]
+[ext_resource type="Resource" uid="uid://du7bneh1d4nmd" path="res://Data/System/Skills/Agility/Move.tres" id="12_t8ky7"]
+[ext_resource type="Resource" uid="uid://c1jspfnernth4" path="res://Data/System/Skills/Agility/Marksmanship.tres" id="13_urjih"]
+[ext_resource type="Resource" uid="uid://66drhos6ii3p" path="res://Data/System/Skills/Wits/Scouting.tres" id="14_wctoe"]
+[ext_resource type="Resource" uid="uid://bf3llv035c4il" path="res://Data/System/Skills/Wits/Lore.tres" id="15_ikpgv"]
+[ext_resource type="Resource" uid="uid://b2co2t7ubhfi" path="res://Data/System/Skills/Wits/Survival.tres" id="16_4i04e"]
+[ext_resource type="Resource" uid="uid://dypvn7bgwu3oa" path="res://Data/System/Skills/Wits/Insight.tres" id="17_hg0yd"]
+[ext_resource type="Resource" uid="uid://co25eaacvje0e" path="res://Data/System/Skills/Empathy/Manipulation.tres" id="18_ay53e"]
+[ext_resource type="Resource" uid="uid://bk5di70b45ho7" path="res://Data/System/Skills/Empathy/Performance.tres" id="19_j2hba"]
+[ext_resource type="Resource" uid="uid://c0p1c00n2nxg1" path="res://Data/System/Skills/Empathy/Healing.tres" id="20_0vui0"]
+[ext_resource type="Resource" uid="uid://bjdxlmdm1bs2s" path="res://Data/System/Skills/Empathy/AnimalHandling.tres" id="21_f3yyp"]
+
+[resource]
+resource_name = "Andrea"
+script = ExtResource("5_6gx6t")
+kin = 2
+profession = 7
+attributes = {
+ExtResource("1_3qog0"): 3,
+ExtResource("2_0tsj2"): 3,
+ExtResource("3_ynl0v"): 4,
+ExtResource("4_7o5nj"): 4
+}
+skills = {
+ExtResource("6_tb8a2"): 0,
+ExtResource("7_6j8js"): 1,
+ExtResource("8_ypirv"): 1,
+ExtResource("9_e5t4u"): 2,
+ExtResource("10_10jkj"): 1,
+ExtResource("11_gm2h7"): 2,
+ExtResource("12_t8ky7"): 0,
+ExtResource("13_urjih"): 0,
+ExtResource("14_wctoe"): 0,
+ExtResource("15_ikpgv"): 0,
+ExtResource("16_4i04e"): 0,
+ExtResource("17_hg0yd"): 0,
+ExtResource("18_ay53e"): 2,
+ExtResource("19_j2hba"): 0,
+ExtResource("20_0vui0"): 0,
+ExtResource("21_f3yyp"): 1
+}

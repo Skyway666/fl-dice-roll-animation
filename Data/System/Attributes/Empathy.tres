@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="CharacterAttribute" load_steps=2 format=3 uid="uid://drjx8ch7bwhkv"]
+
+[ext_resource type="Script" path="res://Scripts/ResourceScripts/Game/Character/character_attribute.gd" id="1_h7eu6"]
+
+[resource]
+resource_name = "Empathy"
+script = ExtResource("1_h7eu6")

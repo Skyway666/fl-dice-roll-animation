@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="CharacterAttribute" load_steps=2 format=3 uid="uid://64xytu2x2fje"]
+
+[ext_resource type="Script" path="res://Scripts/ResourceScripts/Game/Character/character_attribute.gd" id="1_xa1s4"]
+
+[resource]
+resource_name = "Strength"
+script = ExtResource("1_xa1s4")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://vbq4ltxg44xm"]
+
+[ext_resource type="Script" path="res://Scripts/BehaviourScripts/Game/DiceRoll/Computation/dice_roll_computation.gd" id="1_gsean"]
+
+[node name="DiceRollResultComputation" type="Node"]
+script = ExtResource("1_gsean")
