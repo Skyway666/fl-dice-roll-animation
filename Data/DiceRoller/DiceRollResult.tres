@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="DiceRollResult" load_steps=2 format=3 uid="uid://q8vgrysyh3th"]
-
-[ext_resource type="Script" path="res://Scripts/ResourceScripts/Game/DiceRoller/dice_roll_result.gd" id="1_8siql"]
-
-[resource]
-resource_name = "DiceRollResult"
-script = ExtResource("1_8siql")
-result = Array[Resource("res://Scripts/ResourceScripts/Game/DiceRoller/dice_roll.gd")]([])

@@ -1,0 +1,112 @@
+[gd_scene load_steps=13 format=3 uid="uid://u4wfd8g6qr4k"]
+
+[ext_resource type="Script" path="res://roll_3d_dice/scripts/behaviour/animation/dice_roll_animation.gd" id="1_kc483"]
+[ext_resource type="Script" path="res://roll_3d_dice/scripts/static/generic/layouts_3d/parameters/circular_layout_3d_parameters.gd" id="3_2i4ev"]
+[ext_resource type="PackedScene" uid="uid://bwiw3ssnoab66" path="res://roll_3d_dice/scenes/ui/dice_roll_animation_ui.tscn" id="3_akpfk"]
+[ext_resource type="Script" path="res://roll_3d_dice/scripts/static/generic/layouts_3d/parameters/horizontal_layout_3d_parameters.gd" id="4_egc7r"]
+[ext_resource type="Resource" uid="uid://q8vgrysyh3th" path="res://roll_3d_dice/assets/data/dice_roll_result.tres" id="5_t66ue"]
+
+[sub_resource type="Resource" id="Resource_b7je7"]
+script = ExtResource("3_2i4ev")
+splits = 6
+ring_radius = 1.5
+central_element = true
+
+[sub_resource type="Resource" id="Resource_wlpeo"]
+script = ExtResource("4_egc7r")
+element_width = 1.0
+spacing = 1.5
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8x1lc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l272y"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ojtv1"]
+material = SubResource("StandardMaterial3D_l272y")
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bolc1"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wbq7q"]
+size = Vector3(8, 10, 8)
+
+[node name="DiceRollAnimation" type="Node3D" node_paths=PackedStringArray("throw_target")]
+script = ExtResource("1_kc483")
+dice_roll_result = ExtResource("5_t66ue")
+throw_target = NodePath("Floor")
+throw_layout = SubResource("Resource_b7je7")
+throw_force = 2000.0
+critical = true
+slowdown_time_scale = 0.1
+slowdowns = 2
+slowdown_duration = 0.5
+slowdown_interval = 1.0
+physics_duration = 3.0
+final_slowdown_duration = 2.0
+result_max_row_elements = 4
+result_layout = SubResource("Resource_wlpeo")
+result_animation_duration = 1.5
+result_rotation_delay = 1.0
+result_rotation_duration = 0.4
+dice_animated_angular_velocity = Vector3(500, 500, 500)
+
+[node name="DiceRollAnimationUI" parent="." instance=ExtResource("3_akpfk")]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_8x1lc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_ojtv1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_bolc1")
+
+[node name="TopWall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, 0)
+physics_material_override = SubResource("PhysicsMaterial_8x1lc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TopWall"]
+shape = SubResource("BoxShape3D_bolc1")
+
+[node name="FrontWall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 5.5, 5.5)
+physics_material_override = SubResource("PhysicsMaterial_8x1lc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FrontWall"]
+shape = SubResource("BoxShape3D_bolc1")
+
+[node name="BackWall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 5.5, -5.5)
+physics_material_override = SubResource("PhysicsMaterial_8x1lc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BackWall"]
+shape = SubResource("BoxShape3D_bolc1")
+
+[node name="RightWall" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 5.5, 5.5, 0)
+physics_material_override = SubResource("PhysicsMaterial_8x1lc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightWall"]
+shape = SubResource("BoxShape3D_bolc1")
+
+[node name="LeftWall" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -5.5, 5.5, 0)
+physics_material_override = SubResource("PhysicsMaterial_8x1lc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftWall"]
+shape = SubResource("BoxShape3D_bolc1")
+
+[node name="Inside" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 0)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside"]
+shape = SubResource("BoxShape3D_wbq7q")
+
+[connection signal="animation_ended" from="." to="DiceRollAnimationUI" method="show"]
+[connection signal="animation_started" from="." to="DiceRollAnimationUI" method="hide"]
+[connection signal="set_critical" from="DiceRollAnimationUI" to="." method="set_critical"]
+[connection signal="start_animation" from="DiceRollAnimationUI" to="." method="start_animation"]
+[connection signal="body_entered" from="Inside" to="." method="_on_dice_entered_roll_zone"]

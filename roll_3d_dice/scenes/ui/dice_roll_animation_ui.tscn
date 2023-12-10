@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwiw3ssnoab66"]
+
+[ext_resource type="Script" path="res://roll_3d_dice/scripts/behaviour/ui/dice_roll_animation_ui.gd" id="1_2vt5b"]
+[ext_resource type="PackedScene" uid="uid://dlou2h2p7iwcx" path="res://roll_3d_dice/scenes/ui/dice_roll_ui.tscn" id="1_jt7fy"]
+[ext_resource type="Resource" uid="uid://q8vgrysyh3th" path="res://roll_3d_dice/assets/data/dice_roll_result.tres" id="3_s53re"]
+
+[node name="DiceRollAnimationUI" type="Control" node_paths=PackedStringArray("dice_results_UI")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2vt5b")
+dice_results_UI = NodePath("DiceResultsUI")
+roll_result_UI = ExtResource("1_jt7fy")
+dice_roll_result = ExtResource("3_s53re")
+
+[node name="RollButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -135.0
+offset_right = 175.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 56
+text = "Roll "
+
+[node name="DiceResultsUI" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 218.0
+offset_bottom = 116.0
+alignment = 1
+
+[node name="Add" type="Button" parent="DiceResultsUI"]
+layout_mode = 2
+text = "Add"
+
+[node name="Remove" type="Button" parent="DiceResultsUI"]
+layout_mode = 2
+text = "Remove"
+
+[node name="CheckBox" type="CheckBox" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -181.0
+offset_right = 132.0
+offset_bottom = -150.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+button_pressed = true
+text = "Critical"
+
+[connection signal="pressed" from="RollButton" to="." method="on_roll"]
+[connection signal="pressed" from="DiceResultsUI/Add" to="." method="on_add"]
+[connection signal="pressed" from="DiceResultsUI/Remove" to="." method="on_remove"]
+[connection signal="toggled" from="CheckBox" to="." method="on_set_critical"]

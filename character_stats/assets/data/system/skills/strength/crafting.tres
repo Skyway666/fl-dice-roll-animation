@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CharacterSkill" load_steps=3 format=3 uid="uid://u36co6voaulo"]
+
+[ext_resource type="Resource" uid="uid://64xytu2x2fje" path="res://character_stats/assets/data/system/attributes/strength.tres" id="1_v3gl6"]
+[ext_resource type="Script" path="res://character_stats/scripts/resource_scripts/character/character_skill.gd" id="2_ajvdd"]
+
+[resource]
+resource_name = "Crafting"
+script = ExtResource("2_ajvdd")
+associated_attribute = ExtResource("1_v3gl6")

@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5yjn737vwjc3"]
+
+[ext_resource type="PackedScene" uid="uid://vbq4ltxg44xm" path="res://character_stats/scenes/logic/dice_roll_result_computation.tscn" id="1_i00rj"]
+[ext_resource type="Resource" uid="uid://bjj6ohjx4fvpc" path="res://character_stats/assets/data/players/jacob.tres" id="2_820ka"]
+[ext_resource type="Resource" uid="uid://bjdxlmdm1bs2s" path="res://character_stats/assets/data/system/skills/empathy/animal_handling.tres" id="3_xscln"]
+[ext_resource type="Resource" uid="uid://q8vgrysyh3th" path="res://roll_3d_dice/assets/data/dice_roll_result.tres" id="4_fk1yw"]
+
+[node name="DiceRollerUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DiceRoller" parent="." instance=ExtResource("1_i00rj")]
+rolling_character = ExtResource("2_820ka")
+skill_to_roll_for = ExtResource("3_xscln")
+roll_result = ExtResource("4_fk1yw")
+
+[node name="RollButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 56
+text = "Roll"
+
+[connection signal="button_down" from="RollButton" to="DiceRoller" method="roll"]

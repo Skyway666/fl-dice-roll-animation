@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CharactersArray" load_steps=5 format=3 uid="uid://bmb80r74fr6ss"]
+
+[ext_resource type="Resource" uid="uid://b16n6j8juwfmi" path="res://character_stats/assets/data/players/andrea.tres" id="1_88pog"]
+[ext_resource type="Script" path="res://character_stats/scripts/resource_scripts/character/data_containers/characters_array.gd" id="1_ktgjr"]
+[ext_resource type="Resource" uid="uid://3we7saivxl16" path="res://character_stats/assets/data/players/fergus.tres" id="2_s0a2m"]
+[ext_resource type="Resource" uid="uid://bjj6ohjx4fvpc" path="res://character_stats/assets/data/players/jacob.tres" id="3_cm1ye"]
+
+[resource]
+script = ExtResource("1_ktgjr")
+data = Array[Resource("res://character_stats/scripts/resource_scripts/character/character.gd")]([ExtResource("1_88pog"), ExtResource("2_s0a2m"), ExtResource("3_cm1ye")])

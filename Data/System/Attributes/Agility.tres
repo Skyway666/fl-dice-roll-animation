@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="CharacterAttribute" load_steps=2 format=3 uid="uid://bsqyppqn57bjb"]
-
-[ext_resource type="Script" path="res://Scripts/ResourceScripts/Game/Character/character_attribute.gd" id="1_la2v8"]
-
-[resource]
-resource_name = "Agility"
-script = ExtResource("1_la2v8")

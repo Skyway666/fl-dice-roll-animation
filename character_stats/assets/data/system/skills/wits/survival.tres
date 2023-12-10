@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CharacterSkill" load_steps=3 format=3 uid="uid://b2co2t7ubhfi"]
+
+[ext_resource type="Resource" uid="uid://neu5cec3pdkx" path="res://character_stats/assets/data/system/attributes/wits.tres" id="1_l40wh"]
+[ext_resource type="Script" path="res://character_stats/scripts/resource_scripts/character/character_skill.gd" id="2_cxk34"]
+
+[resource]
+resource_name = "Survival"
+script = ExtResource("2_cxk34")
+associated_attribute = ExtResource("1_l40wh")

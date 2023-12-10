@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="CharacterSkill" load_steps=3 format=3 uid="uid://c1jspfnernth4"]
-
-[ext_resource type="Resource" uid="uid://bsqyppqn57bjb" path="res://Data/System/Attributes/Agility.tres" id="1_oqr2b"]
-[ext_resource type="Script" path="res://Scripts/ResourceScripts/Game/Character/character_skill.gd" id="2_8wufi"]
-
-[resource]
-resource_name = "Marksmanship"
-script = ExtResource("2_8wufi")
-associated_attribute = ExtResource("1_oqr2b")

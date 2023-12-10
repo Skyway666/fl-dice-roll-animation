@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CharacterSkill" load_steps=3 format=3 uid="uid://b2lrt61tgvd0i"]
+
+[ext_resource type="Resource" uid="uid://64xytu2x2fje" path="res://character_stats/assets/data/system/attributes/strength.tres" id="1_k5el6"]
+[ext_resource type="Script" path="res://character_stats/scripts/resource_scripts/character/character_skill.gd" id="2_3ge60"]
+
+[resource]
+resource_name = "Endurance"
+script = ExtResource("2_3ge60")
+associated_attribute = ExtResource("1_k5el6")

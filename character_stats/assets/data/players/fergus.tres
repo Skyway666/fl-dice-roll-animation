@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="Character" load_steps=22 format=3 uid="uid://3we7saivxl16"]
+
+[ext_resource type="Resource" uid="uid://64xytu2x2fje" path="res://character_stats/assets/data/system/attributes/strength.tres" id="1_fh0j5"]
+[ext_resource type="Resource" uid="uid://bsqyppqn57bjb" path="res://character_stats/assets/data/system/attributes/agility.tres" id="2_b844m"]
+[ext_resource type="Resource" uid="uid://neu5cec3pdkx" path="res://character_stats/assets/data/system/attributes/wits.tres" id="3_sgjp2"]
+[ext_resource type="Resource" uid="uid://drjx8ch7bwhkv" path="res://character_stats/assets/data/system/attributes/empathy.tres" id="4_dup41"]
+[ext_resource type="Script" path="res://character_stats/scripts/resource_scripts/character/character.gd" id="5_x64sg"]
+[ext_resource type="Resource" uid="uid://7w2nmacp6ok7" path="res://character_stats/assets/data/system/skills/strength/might.tres" id="6_8p73j"]
+[ext_resource type="Resource" uid="uid://b2lrt61tgvd0i" path="res://character_stats/assets/data/system/skills/strength/endurance.tres" id="7_owufu"]
+[ext_resource type="Resource" uid="uid://dvt1jsntj6c20" path="res://character_stats/assets/data/system/skills/strength/melee.tres" id="8_1g7tm"]
+[ext_resource type="Resource" uid="uid://u36co6voaulo" path="res://character_stats/assets/data/system/skills/strength/crafting.tres" id="9_1ovcb"]
+[ext_resource type="Resource" uid="uid://44cul8kaohor" path="res://character_stats/assets/data/system/skills/agility/stealth.tres" id="10_iy8r1"]
+[ext_resource type="Resource" uid="uid://xt4xf7d7fkgc" path="res://character_stats/assets/data/system/skills/agility/sleight_of_hand.tres" id="11_ktlev"]
+[ext_resource type="Resource" uid="uid://du7bneh1d4nmd" path="res://character_stats/assets/data/system/skills/agility/move.tres" id="12_y8vit"]
+[ext_resource type="Resource" uid="uid://c1jspfnernth4" path="res://character_stats/assets/data/system/skills/agility/marksmanship.tres" id="13_224ai"]
+[ext_resource type="Resource" uid="uid://66drhos6ii3p" path="res://character_stats/assets/data/system/skills/wits/scouting.tres" id="14_vjotb"]
+[ext_resource type="Resource" uid="uid://bf3llv035c4il" path="res://character_stats/assets/data/system/skills/wits/lore.tres" id="15_kob6x"]
+[ext_resource type="Resource" uid="uid://b2co2t7ubhfi" path="res://character_stats/assets/data/system/skills/wits/survival.tres" id="16_lx7us"]
+[ext_resource type="Resource" uid="uid://dypvn7bgwu3oa" path="res://character_stats/assets/data/system/skills/wits/insight.tres" id="17_35pst"]
+[ext_resource type="Resource" uid="uid://co25eaacvje0e" path="res://character_stats/assets/data/system/skills/empathy/manipulation.tres" id="18_tm84j"]
+[ext_resource type="Resource" uid="uid://bk5di70b45ho7" path="res://character_stats/assets/data/system/skills/empathy/performance.tres" id="19_3b3of"]
+[ext_resource type="Resource" uid="uid://c0p1c00n2nxg1" path="res://character_stats/assets/data/system/skills/empathy/healing.tres" id="20_aie7j"]
+[ext_resource type="Resource" uid="uid://bjdxlmdm1bs2s" path="res://character_stats/assets/data/system/skills/empathy/animal_handling.tres" id="21_deefq"]
+
+[resource]
+resource_name = "Fergus"
+script = ExtResource("5_x64sg")
+kin = 6
+profession = 2
+attributes = {
+ExtResource("1_fh0j5"): 5,
+ExtResource("2_b844m"): 4,
+ExtResource("3_sgjp2"): 3,
+ExtResource("4_dup41"): 3
+}
+skills = {
+ExtResource("6_8p73j"): 1,
+ExtResource("7_owufu"): 1,
+ExtResource("8_1g7tm"): 1,
+ExtResource("9_1ovcb"): 1,
+ExtResource("10_iy8r1"): 0,
+ExtResource("11_ktlev"): 0,
+ExtResource("12_y8vit"): 3,
+ExtResource("13_224ai"): 0,
+ExtResource("14_vjotb"): 1,
+ExtResource("15_kob6x"): 0,
+ExtResource("16_lx7us"): 0,
+ExtResource("17_35pst"): 0,
+ExtResource("18_tm84j"): 0,
+ExtResource("19_3b3of"): 0,
+ExtResource("20_aie7j"): 0,
+ExtResource("21_deefq"): 0
+}

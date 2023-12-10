@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://d21p4g0gvofm2"]
+
+[ext_resource type="PackedScene" uid="uid://u4wfd8g6qr4k" path="res://roll_3d_dice/scenes/scenarios/dice_roll_animation.tscn" id="1_8xmjv"]
+
+[node name="MainDiceRollAnimation" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 11.5, 12.75)
+
+[node name="ResultTransform" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 7.5)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.899971, -0.157539, -0.40649, 0.376121, 0.752032, 0.541277, 0.220421, -0.640023, 0.736061, -5, 5, 5)
+
+[node name="DiceRollAnimation" parent="." node_paths=PackedStringArray("throw_origin", "result_origin", "camera") instance=ExtResource("1_8xmjv")]
+throw_origin = NodePath("../Camera3D")
+result_origin = NodePath("../ResultTransform")
+camera = NodePath("../Camera3D")

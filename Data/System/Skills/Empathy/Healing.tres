@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="CharacterSkill" load_steps=3 format=3 uid="uid://c0p1c00n2nxg1"]
-
-[ext_resource type="Resource" uid="uid://drjx8ch7bwhkv" path="res://Data/System/Attributes/Empathy.tres" id="1_5vvt6"]
-[ext_resource type="Script" path="res://Scripts/ResourceScripts/Game/Character/character_skill.gd" id="2_fjbqd"]
-
-[resource]
-resource_name = "Healing"
-script = ExtResource("2_fjbqd")
-associated_attribute = ExtResource("1_5vvt6")

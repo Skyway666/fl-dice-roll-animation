@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="CharacterAttribute" load_steps=2 format=3 uid="uid://neu5cec3pdkx"]
+
+[ext_resource type="Script" path="res://character_stats/scripts/resource_scripts/character/character_attribute.gd" id="1_5hvyo"]
+
+[resource]
+resource_name = "Wits"
+script = ExtResource("1_5hvyo")

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CharacterSkill" load_steps=3 format=3 uid="uid://dvt1jsntj6c20"]
+
+[ext_resource type="Resource" uid="uid://64xytu2x2fje" path="res://character_stats/assets/data/system/attributes/strength.tres" id="1_vxtrg"]
+[ext_resource type="Script" path="res://character_stats/scripts/resource_scripts/character/character_skill.gd" id="2_qlppa"]
+
+[resource]
+resource_name = "Melee"
+script = ExtResource("2_qlppa")
+associated_attribute = ExtResource("1_vxtrg")

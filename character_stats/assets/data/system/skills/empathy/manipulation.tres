@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CharacterSkill" load_steps=3 format=3 uid="uid://co25eaacvje0e"]
+
+[ext_resource type="Resource" uid="uid://drjx8ch7bwhkv" path="res://character_stats/assets/data/system/attributes/empathy.tres" id="1_3jcgy"]
+[ext_resource type="Script" path="res://character_stats/scripts/resource_scripts/character/character_skill.gd" id="2_jb4vy"]
+
+[resource]
+resource_name = "Manipulation"
+script = ExtResource("2_jb4vy")
+associated_attribute = ExtResource("1_3jcgy")
