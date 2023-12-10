@@ -184,7 +184,7 @@ func _animate_dices_results():
 				result_animation_duration)
 		# Compute dice result local transform
 		var dice_result_local_rotation = _physical_dices[i].result_rotations[dice_roll_result.result[i].dice_result]
-		var dice_result_local_basis = Basis().from_euler(dice_result_local_rotation * PI/180.0, EULER_ORDER_XYZ)
+		var dice_result_local_basis = Basis.from_euler(dice_result_local_rotation * PI/180.0, EULER_ORDER_XYZ)
 		var dice_result_local_transform = Transform3D(dice_result_local_basis, Vector3.ZERO)
 		# Compute dice "camera look at" transform
 		var look_at_camera_transform = Transform3D(Basis.IDENTITY, dice_result_positions[i])

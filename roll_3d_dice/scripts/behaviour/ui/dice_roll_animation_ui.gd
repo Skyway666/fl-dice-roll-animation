@@ -1,10 +1,6 @@
 extends Node
 class_name DiceRollAnimationUI
 
-# Signals
-signal start_animation
-signal set_critical(value)
-
 # Public variables
 @export_group("References")
 @export var dice_results_UI : Node
@@ -40,9 +36,9 @@ func on_add():
 			roll_result_UIs.size() - 1))
 
 func on_dice_type_selected(selected_item_id : int, roll_result_id : int):
-	dice_roll_result.result[roll_result_id].dice_type = selected_item_id
+	dice_roll_result.result[roll_result_id].dice_type = selected_item_id as DiceRoll.DiceType
 
-func on_dice_result_set(new_value : float, roll_result_id : int):
+func on_dice_result_set(new_value : int, roll_result_id : int):
 	dice_roll_result.result[roll_result_id].dice_result = new_value
 
 func on_remove():
@@ -50,9 +46,3 @@ func on_remove():
 		roll_result_UIs[roll_result_UIs.size() - 1].queue_free()
 		roll_result_UIs.pop_back()
 		dice_roll_result.result.pop_back()
-
-func on_set_critical(value : bool):
-	set_critical.emit(value)
-	
-func on_roll():
-	start_animation.emit()

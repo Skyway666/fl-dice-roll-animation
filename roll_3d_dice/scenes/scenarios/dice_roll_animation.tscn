@@ -1,18 +1,17 @@
-[gd_scene load_steps=13 format=3 uid="uid://u4wfd8g6qr4k"]
+[gd_scene load_steps=12 format=3 uid="uid://u4wfd8g6qr4k"]
 
 [ext_resource type="Script" path="res://roll_3d_dice/scripts/behaviour/animation/dice_roll_animation.gd" id="1_kc483"]
 [ext_resource type="Script" path="res://roll_3d_dice/scripts/static/generic/layouts_3d/parameters/circular_layout_3d_parameters.gd" id="3_2i4ev"]
-[ext_resource type="PackedScene" uid="uid://bwiw3ssnoab66" path="res://roll_3d_dice/scenes/ui/dice_roll_animation_ui.tscn" id="3_akpfk"]
 [ext_resource type="Script" path="res://roll_3d_dice/scripts/static/generic/layouts_3d/parameters/horizontal_layout_3d_parameters.gd" id="4_egc7r"]
 [ext_resource type="Resource" uid="uid://q8vgrysyh3th" path="res://roll_3d_dice/assets/data/dice_roll_result.tres" id="5_t66ue"]
 
-[sub_resource type="Resource" id="Resource_b7je7"]
+[sub_resource type="Resource" id="Resource_m6h2c"]
 script = ExtResource("3_2i4ev")
 splits = 6
 ring_radius = 1.5
 central_element = true
 
-[sub_resource type="Resource" id="Resource_wlpeo"]
+[sub_resource type="Resource" id="Resource_ohovi"]
 script = ExtResource("4_egc7r")
 element_width = 1.0
 spacing = 1.5
@@ -31,11 +30,12 @@ size = Vector3(10, 1, 10)
 [sub_resource type="BoxShape3D" id="BoxShape3D_wbq7q"]
 size = Vector3(8, 10, 8)
 
-[node name="DiceRollAnimation" type="Node3D" node_paths=PackedStringArray("throw_target")]
+[node name="DiceRollAnimation" type="Node3D" node_paths=PackedStringArray("throw_origin", "throw_target", "result_origin", "camera")]
 script = ExtResource("1_kc483")
 dice_roll_result = ExtResource("5_t66ue")
-throw_target = NodePath("Floor")
-throw_layout = SubResource("Resource_b7je7")
+throw_origin = NodePath("Camera3D")
+throw_target = NodePath("DiceRollContainer/Floor")
+throw_layout = SubResource("Resource_m6h2c")
 throw_force = 2000.0
 critical = true
 slowdown_time_scale = 0.1
@@ -44,69 +44,76 @@ slowdown_duration = 0.5
 slowdown_interval = 1.0
 physics_duration = 3.0
 final_slowdown_duration = 2.0
+result_origin = NodePath("ResultTransform")
 result_max_row_elements = 4
-result_layout = SubResource("Resource_wlpeo")
+result_layout = SubResource("Resource_ohovi")
 result_animation_duration = 1.5
 result_rotation_delay = 1.0
 result_rotation_duration = 0.4
 dice_animated_angular_velocity = Vector3(500, 500, 500)
+camera = NodePath("Camera3D")
 
-[node name="DiceRollAnimationUI" parent="." instance=ExtResource("3_akpfk")]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.899971, -0.157539, -0.40649, 0.376121, 0.752032, 0.541277, 0.220421, -0.640023, 0.736061, -5, 5, 5)
 
-[node name="Floor" type="StaticBody3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 11.5, 12.75)
+
+[node name="ResultTransform" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 7.5)
+
+[node name="DiceRollContainer" type="Node3D" parent="."]
+
+[node name="Floor" type="StaticBody3D" parent="DiceRollContainer"]
 physics_material_override = SubResource("PhysicsMaterial_8x1lc")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DiceRollContainer/Floor"]
 mesh = SubResource("BoxMesh_ojtv1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DiceRollContainer/Floor"]
 shape = SubResource("BoxShape3D_bolc1")
 
-[node name="TopWall" type="StaticBody3D" parent="."]
+[node name="TopWall" type="StaticBody3D" parent="DiceRollContainer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, 0)
 physics_material_override = SubResource("PhysicsMaterial_8x1lc")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TopWall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DiceRollContainer/TopWall"]
 shape = SubResource("BoxShape3D_bolc1")
 
-[node name="FrontWall" type="StaticBody3D" parent="."]
+[node name="FrontWall" type="StaticBody3D" parent="DiceRollContainer"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 5.5, 5.5)
 physics_material_override = SubResource("PhysicsMaterial_8x1lc")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FrontWall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DiceRollContainer/FrontWall"]
 shape = SubResource("BoxShape3D_bolc1")
 
-[node name="BackWall" type="StaticBody3D" parent="."]
+[node name="BackWall" type="StaticBody3D" parent="DiceRollContainer"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 5.5, -5.5)
 physics_material_override = SubResource("PhysicsMaterial_8x1lc")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BackWall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DiceRollContainer/BackWall"]
 shape = SubResource("BoxShape3D_bolc1")
 
-[node name="RightWall" type="StaticBody3D" parent="."]
+[node name="RightWall" type="StaticBody3D" parent="DiceRollContainer"]
 transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 5.5, 5.5, 0)
 physics_material_override = SubResource("PhysicsMaterial_8x1lc")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RightWall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DiceRollContainer/RightWall"]
 shape = SubResource("BoxShape3D_bolc1")
 
-[node name="LeftWall" type="StaticBody3D" parent="."]
+[node name="LeftWall" type="StaticBody3D" parent="DiceRollContainer"]
 transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -5.5, 5.5, 0)
 physics_material_override = SubResource("PhysicsMaterial_8x1lc")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftWall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DiceRollContainer/LeftWall"]
 shape = SubResource("BoxShape3D_bolc1")
 
-[node name="Inside" type="Area3D" parent="."]
+[node name="Inside" type="Area3D" parent="DiceRollContainer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 0)
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DiceRollContainer/Inside"]
 shape = SubResource("BoxShape3D_wbq7q")
 
-[connection signal="animation_ended" from="." to="DiceRollAnimationUI" method="show"]
-[connection signal="animation_started" from="." to="DiceRollAnimationUI" method="hide"]
-[connection signal="set_critical" from="DiceRollAnimationUI" to="." method="set_critical"]
-[connection signal="start_animation" from="DiceRollAnimationUI" to="." method="start_animation"]
-[connection signal="body_entered" from="Inside" to="." method="_on_dice_entered_roll_zone"]
+[connection signal="body_entered" from="DiceRollContainer/Inside" to="." method="_on_dice_entered_roll_zone"]

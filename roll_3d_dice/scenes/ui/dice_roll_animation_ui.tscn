@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://bwiw3ssnoab66"]
+[gd_scene load_steps=7 format=3 uid="uid://bwiw3ssnoab66"]
 
 [ext_resource type="Script" path="res://roll_3d_dice/scripts/behaviour/ui/dice_roll_animation_ui.gd" id="1_2vt5b"]
 [ext_resource type="PackedScene" uid="uid://dlou2h2p7iwcx" path="res://roll_3d_dice/scenes/ui/dice_roll_ui.tscn" id="1_jt7fy"]
 [ext_resource type="Resource" uid="uid://q8vgrysyh3th" path="res://roll_3d_dice/assets/data/dice_roll_result.tres" id="3_s53re"]
+[ext_resource type="Texture2D" uid="uid://o1ccr88acprb" path="res://_placeholders/game_background_placeholder.jpg" id="4_ikvpr"]
+[ext_resource type="PackedScene" uid="uid://u4wfd8g6qr4k" path="res://roll_3d_dice/scenes/scenarios/dice_roll_animation.tscn" id="5_lqj4j"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_6w2oi"]
+viewport_path = NodePath("DiceRollAnimationViewport")
 
 [node name="DiceRollAnimationUI" type="Control" node_paths=PackedStringArray("dice_results_UI")]
 layout_mode = 3
@@ -12,11 +17,63 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2vt5b")
-dice_results_UI = NodePath("DiceResultsUI")
+dice_results_UI = NodePath("Input/DiceResultsUI")
 roll_result_UI = ExtResource("1_jt7fy")
 dice_roll_result = ExtResource("3_s53re")
 
-[node name="RollButton" type="Button" parent="."]
+[node name="Background (PLACEHOLDER)" type="TextureRect" parent="."]
+self_modulate = Color(0.286275, 0.286275, 0.286275, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_ikvpr")
+
+[node name="DiceRollAnimationRender" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 470.0
+offset_top = 166.0
+offset_right = -450.0
+offset_bottom = -414.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_6w2oi")
+
+[node name="DiceRollAnimationViewport" type="SubViewport" parent="."]
+size = Vector2i(1000, 500)
+
+[node name="DiceRollAnimation" parent="DiceRollAnimationViewport" instance=ExtResource("5_lqj4j")]
+
+[node name="Input" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DiceResultsUI" type="VBoxContainer" parent="Input"]
+layout_mode = 1
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 218.0
+offset_bottom = 116.0
+alignment = 1
+
+[node name="Add" type="Button" parent="Input/DiceResultsUI"]
+layout_mode = 2
+text = "Add"
+
+[node name="Remove" type="Button" parent="Input/DiceResultsUI"]
+layout_mode = 2
+text = "Remove"
+
+[node name="RollButton" type="Button" parent="Input"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -29,37 +86,23 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 56
 text = "Roll "
 
-[node name="DiceResultsUI" type="VBoxContainer" parent="."]
-layout_mode = 1
-offset_left = 50.0
-offset_top = 50.0
-offset_right = 218.0
-offset_bottom = 116.0
-alignment = 1
-
-[node name="Add" type="Button" parent="DiceResultsUI"]
-layout_mode = 2
-text = "Add"
-
-[node name="Remove" type="Button" parent="DiceResultsUI"]
-layout_mode = 2
-text = "Remove"
-
-[node name="CheckBox" type="CheckBox" parent="."]
+[node name="CheckBox" type="CheckBox" parent="Input"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 50.0
-offset_top = -181.0
-offset_right = 132.0
-offset_bottom = -150.0
+offset_top = -196.0
+offset_right = 146.0
+offset_bottom = -160.0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 20
 button_pressed = true
 text = "Critical"
 
-[connection signal="pressed" from="RollButton" to="." method="on_roll"]
-[connection signal="pressed" from="DiceResultsUI/Add" to="." method="on_add"]
-[connection signal="pressed" from="DiceResultsUI/Remove" to="." method="on_remove"]
-[connection signal="toggled" from="CheckBox" to="." method="on_set_critical"]
+[connection signal="animation_ended" from="DiceRollAnimationViewport/DiceRollAnimation" to="Input" method="show"]
+[connection signal="animation_started" from="DiceRollAnimationViewport/DiceRollAnimation" to="Input" method="hide"]
+[connection signal="pressed" from="Input/DiceResultsUI/Add" to="." method="on_add"]
+[connection signal="pressed" from="Input/DiceResultsUI/Remove" to="." method="on_remove"]
+[connection signal="pressed" from="Input/RollButton" to="DiceRollAnimationViewport/DiceRollAnimation" method="start_animation"]
+[connection signal="toggled" from="Input/CheckBox" to="DiceRollAnimationViewport/DiceRollAnimation" method="set_critical"]
