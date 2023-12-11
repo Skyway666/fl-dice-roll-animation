@@ -1,5 +1,5 @@
-extends MeshInstance3D
 class_name CustomMesh
+extends MeshInstance3D
 
 # Public variables
 @export var verts: PackedVector3Array

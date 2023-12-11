@@ -1,5 +1,5 @@
-extends RigidBody3D
 class_name PhysicalDice
+extends RigidBody3D
 
 # Public variables
 @export var static_mesh_bounce_force: float

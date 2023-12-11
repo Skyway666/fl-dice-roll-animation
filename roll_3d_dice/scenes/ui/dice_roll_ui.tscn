@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://roll_3d_dice/scripts/behaviour/ui/dice_roll_ui.gd" id="1_34qal"]
 
-[node name="DiceRoll" type="HBoxContainer" node_paths=PackedStringArray("dice_type_UI", "dice_result_UI")]
+[node name="DiceRoll" type="HBoxContainer" node_paths=PackedStringArray("dice_type_ui", "dice_result_ui")]
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_34qal")
-dice_type_UI = NodePath("DiceType")
-dice_result_UI = NodePath("DiceResult")
+dice_type_ui = NodePath("DiceType")
+dice_result_ui = NodePath("DiceResult")
 
 [node name="DiceType" type="OptionButton" parent="."]
 layout_mode = 2

@@ -1,6 +1,6 @@
-extends HBoxContainer
 class_name DiceRollUI
+extends HBoxContainer
 
 # Public variables
-@export var dice_type_UI: OptionButton
-@export var dice_result_UI: SpinBox
+@export var dice_type_ui: OptionButton
+@export var dice_result_ui: SpinBox
