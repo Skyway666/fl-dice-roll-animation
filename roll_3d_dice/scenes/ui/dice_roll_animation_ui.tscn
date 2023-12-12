@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://u4wfd8g6qr4k" path="res://roll_3d_dice/scenes/scenarios/dice_roll_animation.tscn" id="5_lqj4j"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_6w2oi"]
-viewport_path = NodePath("DiceRollAnimationViewport")
+viewport_path = NodePath("DiceRollAnimation")
 
 [node name="DiceRollAnimationUI" type="Control" node_paths=PackedStringArray("dice_results_ui")]
 layout_mode = 3
@@ -44,10 +44,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_6w2oi")
 
-[node name="DiceRollAnimationViewport" type="SubViewport" parent="."]
-size = Vector2i(1000, 500)
-
-[node name="DiceRollAnimation" parent="DiceRollAnimationViewport" instance=ExtResource("5_lqj4j")]
+[node name="DiceRollAnimation" parent="." instance=ExtResource("5_lqj4j")]
 
 [node name="Input" type="Control" parent="."]
 layout_mode = 1
@@ -100,9 +97,9 @@ theme_override_font_sizes/font_size = 20
 button_pressed = true
 text = "Critical"
 
-[connection signal="animation_ended" from="DiceRollAnimationViewport/DiceRollAnimation" to="Input" method="show"]
-[connection signal="animation_started" from="DiceRollAnimationViewport/DiceRollAnimation" to="Input" method="hide"]
+[connection signal="animation_ended" from="DiceRollAnimation" to="Input" method="show"]
+[connection signal="animation_started" from="DiceRollAnimation" to="Input" method="hide"]
 [connection signal="pressed" from="Input/DiceResultsUI/Add" to="." method="on_add"]
 [connection signal="pressed" from="Input/DiceResultsUI/Remove" to="." method="on_remove"]
-[connection signal="pressed" from="Input/RollButton" to="DiceRollAnimationViewport/DiceRollAnimation" method="start_animation"]
-[connection signal="toggled" from="Input/CheckBox" to="DiceRollAnimationViewport/DiceRollAnimation" method="set_critical"]
+[connection signal="pressed" from="Input/RollButton" to="DiceRollAnimation" method="start_animation"]
+[connection signal="toggled" from="Input/CheckBox" to="DiceRollAnimation" method="set_critical"]

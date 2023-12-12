@@ -30,11 +30,11 @@ size = Vector3(10, 1, 10)
 [sub_resource type="BoxShape3D" id="BoxShape3D_wbq7q"]
 size = Vector3(8, 10, 8)
 
-[node name="DiceRollAnimation" type="Node3D" node_paths=PackedStringArray("throw_origin", "throw_target", "result_origin", "camera")]
+[node name="DiceRollAnimation" type="SubViewport" node_paths=PackedStringArray("throw_origin", "result_origin", "camera")]
+size = Vector2i(1000, 500)
 script = ExtResource("1_kc483")
 dice_roll_result = ExtResource("5_t66ue")
-throw_origin = NodePath("Camera3D")
-throw_target = NodePath("DiceRollContainer/Floor")
+throw_origin = NodePath("ThrowTransform")
 throw_layout = SubResource("Resource_m6h2c")
 throw_force = 2000.0
 critical = true
@@ -57,10 +57,13 @@ camera = NodePath("Camera3D")
 transform = Transform3D(0.899971, -0.157539, -0.40649, 0.376121, 0.752032, 0.541277, 0.220421, -0.640023, 0.736061, -5, 5, 5)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 11.5, 12.75)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 8.5, 0)
+
+[node name="ThrowTransform" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0.173614, 0.984814, 0, 0.984814, -0.173614, -1, -7.5889e-09, -4.30476e-08, -12.75, 6, 0)
 
 [node name="ResultTransform" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 7.5)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 0)
 
 [node name="DiceRollContainer" type="Node3D" parent="."]
 
