@@ -5,6 +5,9 @@ extends Node
 signal animation_started
 signal animation_ended
 
+#Enums
+enum ResultOrientation { LOOK_AT_CAMERA, LOOK_IN_CAMERA_DIRECTION }
+
 # Public variables
 @export_group("Input")
 @export var dice_roll_result: DiceRollResult
@@ -40,6 +43,7 @@ signal animation_ended
 @export var result_animation_duration: float
 @export var result_rotation_delay: float
 @export var result_rotation_duration: float
+@export var result_orientation: ResultOrientation
 @export var dice_animated_angular_velocity: Vector3
 @export var camera: Camera3D
 @export var camera_result_position: Vector3
@@ -221,12 +225,9 @@ func _animate_dices_results():
 		)
 		var dice_result_local_transform = Transform3D(dice_result_local_basis, Vector3.ZERO)
 		# Compute dice "camera look at" transform
-		var look_at_camera_transform = Transform3D(Basis.IDENTITY, dice_result_positions[i])
-		look_at_camera_transform = look_at_camera_transform.looking_at(
-			camera_result_position, camera.basis.y, true
-		)
+		var dice_result_transform = _get_dice_result_transform(dice_result_positions[i])
 		# Add transforms for final rotation
-		var final_transform = look_at_camera_transform * dice_result_local_transform
+		var final_transform = dice_result_transform * dice_result_local_transform
 		# Animate final rotation
 		var rotation_tween = _physical_dices[i].create_tween()
 		rotation_tween.tween_interval(result_rotation_delay)
@@ -246,6 +247,19 @@ func _animate_dices_results():
 		. tween_property(camera, "position", camera_result_position, result_animation_duration)
 		. set_trans(Tween.TRANS_SPRING)
 	)
+
+
+func _get_dice_result_transform(dice_position: Vector3):
+	# Create "LOOK_IN_CAMERA_DIRECTION" transform
+	var dice_result_transform = Transform3D(camera.basis, dice_position)
+
+	# Override if result_orientation is "LOOK_AT_CAMERA"
+	if result_orientation == ResultOrientation.LOOK_AT_CAMERA:
+		dice_result_transform = dice_result_transform.looking_at(
+			camera_result_position, camera.basis.y, true
+		)
+
+	return dice_result_transform
 
 
 func _stop_dices_animated_angular_velocity():
