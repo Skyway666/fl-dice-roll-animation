@@ -2,7 +2,7 @@ class_name PhysicalDice
 extends RigidBody3D
 
 # Public variables
-@export var static_mesh_bounce_force: float
+@export var static_body_bounce_force: float
 @export var result_rotations: Dictionary = {
 	1: Vector3.ZERO,
 	2: Vector3.ZERO,
@@ -22,13 +22,15 @@ func _process(delta):
 
 
 func _integrate_forces(state):
-	_bounce_off_static_bodies(state)
+	_bounce_off_walls(state)
 
 
 # Private methods
-func _bounce_off_static_bodies(state):
+func _bounce_off_walls(state):
 	# Iterate collisions
 	for i in state.get_contact_count():
-		# Bounce of StaticBody3D objects
-		if state.get_contact_collider_object(i) is StaticBody3D:
-			state.apply_central_force(state.get_contact_local_normal(i) * static_mesh_bounce_force)
+		# Bounce of PhysicalDiceBounceWall objects
+		if state.get_contact_collider_object(i) is PhysicalDiceBounceWall:
+			state.apply_central_impulse(
+				state.get_contact_local_normal(i) * static_body_bounce_force
+			)

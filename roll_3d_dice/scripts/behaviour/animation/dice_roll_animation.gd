@@ -21,6 +21,8 @@ signal animation_ended
 @export_subgroup("Physics")
 @export var generic_collision_layer: int = 1
 @export var throw_force: float
+@export var throw_force_random_variation: float
+@export var throw_torque_range: float
 @export_subgroup("Critical")
 @export var critical: bool
 @export var slowdown_time_scale: float
@@ -40,10 +42,18 @@ signal animation_ended
 @export var result_rotation_duration: float
 @export var dice_animated_angular_velocity: Vector3
 @export var camera: Camera3D
+@export var camera_result_position: Vector3
 
 # Private variables
 var _physical_dices: Array[RigidBody3D] = []
 var _time_scale_animation: Tween
+var _camera_animation: Tween
+var _camera_initial_position: Vector3
+
+
+# Engine methods
+func _ready():
+	_camera_initial_position = camera.position
 
 
 # Public methods
@@ -53,6 +63,9 @@ func set_critical(value: bool):
 
 func start_animation():
 	if dice_roll_result.result.size() > 0:
+		if _camera_animation != null && _camera_animation.is_valid():
+			_camera_animation.kill()
+		camera.position = _camera_initial_position
 		_destroy_dices()
 		_instantiate_dices()
 		_throw_dices()
@@ -94,7 +107,22 @@ func _destroy_dices():
 func _throw_dices():
 	# Throw dices
 	for physical_dice in _physical_dices:
-		physical_dice.apply_central_force(throw_origin.basis.z * throw_force)
+		physical_dice.apply_central_impulse(
+			(
+				throw_origin.basis.z
+				* (
+					throw_force
+					* randf_range(
+						1 - throw_force_random_variation, 1 + throw_force_random_variation
+					)
+				)
+			)
+		)
+		physical_dice.angular_velocity = (Vector3(
+			randf_range(-throw_torque_range, throw_torque_range),
+			randf_range(-throw_torque_range, throw_torque_range),
+			randf_range(-throw_torque_range, throw_torque_range)
+		))
 
 
 # Invoked when a dice collides with the inside of the roll zone
@@ -195,7 +223,7 @@ func _animate_dices_results():
 		# Compute dice "camera look at" transform
 		var look_at_camera_transform = Transform3D(Basis.IDENTITY, dice_result_positions[i])
 		look_at_camera_transform = look_at_camera_transform.looking_at(
-			camera.position, camera.basis.y, true
+			camera_result_position, camera.basis.y, true
 		)
 		# Add transforms for final rotation
 		var final_transform = look_at_camera_transform * dice_result_local_transform
@@ -210,6 +238,14 @@ func _animate_dices_results():
 			result_rotation_duration
 		)
 		rotation_tween.tween_callback(func(): animation_ended.emit())
+
+	# Animate camera
+	_camera_animation = camera.create_tween()
+	(
+		_camera_animation
+		. tween_property(camera, "position", camera_result_position, result_animation_duration)
+		. set_trans(Tween.TRANS_SPRING)
+	)
 
 
 func _stop_dices_animated_angular_velocity():

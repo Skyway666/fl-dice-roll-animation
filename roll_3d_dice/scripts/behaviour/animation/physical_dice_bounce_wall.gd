@@ -1,0 +1,2 @@
+class_name PhysicalDiceBounceWall
+extends StaticBody3D

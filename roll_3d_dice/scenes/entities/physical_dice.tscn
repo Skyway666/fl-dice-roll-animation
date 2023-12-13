@@ -14,7 +14,7 @@ physics_material_override = SubResource("PhysicsMaterial_v6arb")
 max_contacts_reported = 10
 contact_monitor = true
 script = ExtResource("1_krdyu")
-static_mesh_bounce_force = 500.0
+static_body_bounce_force = 5.0
 result_rotations = {
 1: Vector3(180, 0, 0),
 2: Vector3(-90, 0, 0),
