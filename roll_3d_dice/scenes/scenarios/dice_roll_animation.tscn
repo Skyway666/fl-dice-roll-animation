@@ -63,6 +63,7 @@ transform = Transform3D(0.899971, -0.157539, -0.40649, 0.376121, 0.752032, 0.541
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15, 0)
+projection = 1
 size = 11.5
 
 [node name="ThrowTransform" type="Node3D" parent="."]
