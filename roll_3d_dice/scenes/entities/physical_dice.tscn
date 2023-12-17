@@ -1,13 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://dn2skxyo8ay8j"]
+[gd_scene load_steps=11 format=3 uid="uid://dn2skxyo8ay8j"]
 
 [ext_resource type="Script" path="res://roll_3d_dice/scripts/behaviour/animation/physical_dice.gd" id="1_krdyu"]
+[ext_resource type="AudioStream" uid="uid://d1piek864x85n" path="res://roll_3d_dice/assets/sound_fx/dice_collisions/DiceOnDice1.wav" id="2_detbo"]
 [ext_resource type="Script" path="res://roll_3d_dice/scripts/behaviour/generic/custom_mesh.gd" id="2_o5805"]
+[ext_resource type="AudioStream" uid="uid://cyjpc3khc728w" path="res://roll_3d_dice/assets/sound_fx/dice_collisions/DiceOnDice2.wav" id="3_g3x0y"]
+[ext_resource type="AudioStream" uid="uid://cac5qk8hk3t15" path="res://roll_3d_dice/assets/sound_fx/dice_collisions/DiceOnDice3.wav" id="4_lfe78"]
+[ext_resource type="AudioStream" uid="uid://dgiqkdrihd3a6" path="res://roll_3d_dice/assets/sound_fx/dice_collisions/DiceOnWall1.wav" id="5_jpf41"]
+[ext_resource type="AudioStream" uid="uid://md1e5cutcw01" path="res://roll_3d_dice/assets/sound_fx/dice_collisions/DiceOnWall2.wav" id="6_ts8kr"]
+[ext_resource type="AudioStream" uid="uid://clhjk6g0iykxr" path="res://roll_3d_dice/assets/sound_fx/dice_collisions/DiceOnWall3.wav" id="7_3nbqn"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v6arb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gn0nt"]
 
-[node name="PhysicalDice" type="RigidBody3D"]
+[node name="PhysicalDice" type="RigidBody3D" node_paths=PackedStringArray("audio_stream_player")]
 collision_layer = 2
 collision_mask = 2
 physics_material_override = SubResource("PhysicsMaterial_v6arb")
@@ -23,6 +29,10 @@ result_rotations = {
 5: Vector3(180, 180, 0),
 6: Vector3(0, -90, 180)
 }
+max_sound_effect_cadence = 0.5
+audio_stream_player = NodePath("AudioStreamPlayer")
+dice_on_dice_sound_fxs = Array[AudioStream]([ExtResource("2_detbo"), ExtResource("3_g3x0y"), ExtResource("4_lfe78")])
+dice_on_wall_sound_fxs = Array[AudioStream]([ExtResource("5_jpf41"), ExtResource("6_ts8kr"), ExtResource("7_3nbqn")])
 
 [node name="DiceMesh" type="MeshInstance3D" parent="."]
 script = ExtResource("2_o5805")
@@ -33,3 +43,5 @@ indices = PackedInt32Array(0, 1, 2, 2, 3, 0, 4, 5, 6, 6, 7, 4, 8, 9, 10, 10, 11,
 
 [node name="DiceCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_gn0nt")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

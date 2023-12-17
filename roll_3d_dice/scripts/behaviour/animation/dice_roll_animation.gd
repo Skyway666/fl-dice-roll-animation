@@ -32,7 +32,8 @@ enum ResultOrientation { LOOK_AT_CAMERA, LOOK_IN_CAMERA_DIRECTION }
 @export var slowdowns: int
 @export var slowdown_duration: float
 @export var slowdown_interval: float
-@export_subgroup("Time scale animation")
+@export var slowdown_stream_player: AudioStreamPlayer
+@export_subgroup("Physics animation")
 @export var physics_duration: float
 @export var final_slowdown_duration: float
 @export_subgroup("Result distribution")
@@ -147,7 +148,10 @@ func _play_time_scale_animation():
 			# Wait
 			_time_scale_animation.tween_interval(slowdown_interval)
 			# Start slowdown
-			_time_scale_animation.tween_callback(func(): Engine.time_scale = slowdown_time_scale)
+			_time_scale_animation.tween_callback(func(): 
+				Engine.time_scale = slowdown_time_scale
+				slowdown_stream_player.play()
+				)
 			# Wait	(time is slower so we need to adjust slowdown duration)
 			_time_scale_animation.tween_interval(slowdown_duration * slowdown_time_scale)
 			# Stop slowdown

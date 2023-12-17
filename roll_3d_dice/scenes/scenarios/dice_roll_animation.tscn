@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://u4wfd8g6qr4k"]
+[gd_scene load_steps=14 format=3 uid="uid://u4wfd8g6qr4k"]
 
 [ext_resource type="Script" path="res://roll_3d_dice/scripts/behaviour/animation/dice_roll_animation.gd" id="1_kc483"]
 [ext_resource type="Script" path="res://roll_3d_dice/scripts/static/generic/layouts_3d/parameters/circular_layout_3d_parameters.gd" id="3_2i4ev"]
 [ext_resource type="Script" path="res://roll_3d_dice/scripts/static/generic/layouts_3d/parameters/horizontal_layout_3d_parameters.gd" id="4_egc7r"]
 [ext_resource type="Script" path="res://roll_3d_dice/scripts/behaviour/animation/physical_dice_bounce_wall.gd" id="5_jovug"]
 [ext_resource type="Resource" uid="uid://q8vgrysyh3th" path="res://roll_3d_dice/assets/data/dice_roll_result.tres" id="5_t66ue"]
+[ext_resource type="AudioStream" uid="uid://cesovav358c1v" path="res://roll_3d_dice/assets/sound_fx/Slowdown.wav" id="6_ny71u"]
 
 [sub_resource type="Resource" id="Resource_m6h2c"]
 script = ExtResource("3_2i4ev")
@@ -31,7 +32,7 @@ size = Vector3(10, 1, 10)
 [sub_resource type="BoxShape3D" id="BoxShape3D_wbq7q"]
 size = Vector3(8, 10, 8)
 
-[node name="DiceRollAnimation" type="SubViewport" node_paths=PackedStringArray("throw_origin", "result_origin", "camera")]
+[node name="DiceRollAnimation" type="SubViewport" node_paths=PackedStringArray("throw_origin", "slowdown_stream_player", "result_origin", "camera")]
 size = Vector2i(1000, 500)
 script = ExtResource("1_kc483")
 dice_roll_result = ExtResource("5_t66ue")
@@ -45,6 +46,7 @@ slowdown_time_scale = 0.1
 slowdowns = 2
 slowdown_duration = 0.5
 slowdown_interval = 1.0
+slowdown_stream_player = NodePath("AudioStreamPlayer")
 physics_duration = 3.0
 final_slowdown_duration = 2.0
 result_origin = NodePath("ResultTransform")
@@ -131,5 +133,8 @@ collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DiceRollContainer/Inside"]
 shape = SubResource("BoxShape3D_wbq7q")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_ny71u")
 
 [connection signal="body_entered" from="DiceRollContainer/Inside" to="." method="_on_dice_entered_roll_zone"]
