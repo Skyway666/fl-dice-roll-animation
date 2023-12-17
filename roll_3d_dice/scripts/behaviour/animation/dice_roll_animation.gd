@@ -185,9 +185,9 @@ func _animate_dices_results():
 	var next_row_transform = Transform3D(result_origin.global_transform)
 	# Center vertical layouts
 	var dice_rows = (
-		_physical_dices.size() / result_max_row_elements + 1
-		if _physical_dices.size() % result_max_row_elements != 0
-		else 0
+		_physical_dices.size() / result_max_row_elements + 
+		(1 if _physical_dices.size() % result_max_row_elements != 0 
+		else 0)
 	)
 	var centering_offset = (dice_rows - 1) * result_layout.spacing / 2
 	next_row_transform.origin += (result_origin.global_transform.basis.y * centering_offset)
