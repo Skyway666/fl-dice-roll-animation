@@ -29,7 +29,7 @@ result_rotations = {
 5: Vector3(180, 180, 0),
 6: Vector3(0, -90, 180)
 }
-max_sound_effect_cadence = 0.5
+max_sound_effect_cadence = 0.2
 audio_stream_player = NodePath("AudioStreamPlayer")
 dice_on_dice_sound_fxs = Array[AudioStream]([ExtResource("2_detbo"), ExtResource("3_g3x0y"), ExtResource("4_lfe78")])
 dice_on_wall_sound_fxs = Array[AudioStream]([ExtResource("5_jpf41"), ExtResource("6_ts8kr"), ExtResource("7_3nbqn")])
