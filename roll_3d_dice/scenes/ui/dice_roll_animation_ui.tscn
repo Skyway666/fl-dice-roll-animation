@@ -1,13 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bwiw3ssnoab66"]
+[gd_scene load_steps=6 format=3 uid="uid://bwiw3ssnoab66"]
 
 [ext_resource type="Script" path="res://roll_3d_dice/scripts/behaviour/ui/dice_roll_animation_ui.gd" id="1_2vt5b"]
 [ext_resource type="PackedScene" uid="uid://dlou2h2p7iwcx" path="res://roll_3d_dice/scenes/ui/dice_roll_ui.tscn" id="1_jt7fy"]
 [ext_resource type="Resource" uid="uid://q8vgrysyh3th" path="res://roll_3d_dice/assets/data/dice_roll_result.tres" id="3_s53re"]
 [ext_resource type="Texture2D" uid="uid://o1ccr88acprb" path="res://_placeholders/game_background_placeholder.jpg" id="4_ikvpr"]
 [ext_resource type="PackedScene" uid="uid://u4wfd8g6qr4k" path="res://roll_3d_dice/scenes/scenarios/dice_roll_animation.tscn" id="5_lqj4j"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_6w2oi"]
-viewport_path = NodePath("DiceRollAnimation")
 
 [node name="DiceRollAnimationUI" type="Control" node_paths=PackedStringArray("dice_results_ui")]
 layout_mode = 3
@@ -31,7 +28,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_ikvpr")
 
-[node name="DiceRollAnimationRender" type="TextureRect" parent="."]
+[node name="DiceRollAnimationRender" type="SubViewportContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -42,9 +39,8 @@ offset_right = -450.0
 offset_bottom = -414.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("ViewportTexture_6w2oi")
 
-[node name="DiceRollAnimation" parent="." instance=ExtResource("5_lqj4j")]
+[node name="DiceRollAnimation" parent="DiceRollAnimationRender" instance=ExtResource("5_lqj4j")]
 
 [node name="Input" type="Control" parent="."]
 layout_mode = 1
@@ -97,9 +93,9 @@ theme_override_font_sizes/font_size = 20
 button_pressed = true
 text = "Critical"
 
-[connection signal="animation_ended" from="DiceRollAnimation" to="Input" method="show"]
-[connection signal="animation_started" from="DiceRollAnimation" to="Input" method="hide"]
+[connection signal="animation_ended" from="DiceRollAnimationRender/DiceRollAnimation" to="Input" method="show"]
+[connection signal="animation_started" from="DiceRollAnimationRender/DiceRollAnimation" to="Input" method="hide"]
 [connection signal="pressed" from="Input/DiceResultsUI/Add" to="." method="on_add"]
 [connection signal="pressed" from="Input/DiceResultsUI/Remove" to="." method="on_remove"]
-[connection signal="pressed" from="Input/RollButton" to="DiceRollAnimation" method="start_animation"]
-[connection signal="toggled" from="Input/CheckBox" to="DiceRollAnimation" method="set_critical"]
+[connection signal="pressed" from="Input/RollButton" to="DiceRollAnimationRender/DiceRollAnimation" method="start_animation"]
+[connection signal="toggled" from="Input/CheckBox" to="DiceRollAnimationRender/DiceRollAnimation" method="set_critical"]

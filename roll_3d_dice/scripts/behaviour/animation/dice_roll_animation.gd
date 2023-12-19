@@ -64,11 +64,6 @@ func _ready():
 	_camera_initial_position = camera.position
 
 
-func _process(delta):
-	if Input.is_action_just_pressed("ui_accept") and _animating:
-		_skip_animation()
-
-# TODO: Figure out why this is not working
 func _input(event):
 	if (
 		event is InputEventMouseButton
