@@ -51,14 +51,32 @@ enum ResultOrientation { LOOK_AT_CAMERA, LOOK_IN_CAMERA_DIRECTION }
 
 # Private variables
 var _physical_dices: Array[RigidBody3D] = []
-var _time_scale_animation: Tween
-var _camera_animation: Tween
 var _camera_initial_position: Vector3
+var _animating = false
+var _time_scale_animation: Tween
+var _dice_position_tweens: Array[Tween]
+var _dice_rotation_tweens: Array[Tween]
+var _camera_animation: Tween
 
 
 # Engine methods
 func _ready():
 	_camera_initial_position = camera.position
+
+
+func _process(delta):
+	if Input.is_action_just_pressed("ui_accept") and _animating:
+		_skip_animation()
+
+# TODO: Figure out why this is not working
+func _input(event):
+	if (
+		event is InputEventMouseButton
+		and event.button_index == MOUSE_BUTTON_LEFT
+		and event.pressed
+		and _animating
+	):
+		_skip_animation()
 
 
 # Public methods
@@ -71,23 +89,36 @@ func start_animation():
 		# Sort dices
 		dice_roll_result.sort_by_dice_type()
 		# Reset everything
-		if _camera_animation != null && _camera_animation.is_valid():
-			_camera_animation.kill()
-		camera.position = _camera_initial_position
-		if _time_scale_animation != null && _time_scale_animation.is_valid():
-			_time_scale_animation.kill()
-		Engine.time_scale = 1
+		_reset()
 		# Start animation
 		_destroy_dices()
 		_instantiate_dices()
 		_throw_dices()
 		_play_time_scale_animation()
 		# Emit event
+		_animating = true
 		animation_started.emit()
 
 
 # Private methods
-# Instantiate dices based on dice results and distribute in circle
+func _reset():
+	# Kill tweens
+	if _camera_animation != null && _camera_animation.is_valid():
+		_camera_animation.kill()
+	if _time_scale_animation != null && _time_scale_animation.is_valid():
+		_time_scale_animation.kill()
+	for dice_position_tween in _dice_position_tweens:
+		dice_position_tween.kill()
+	_dice_position_tweens.clear()
+	for dice_rotation_tween in _dice_rotation_tweens:
+		dice_rotation_tween.kill()
+	_dice_rotation_tweens.clear()
+	# Reset modified variables
+	camera.position = _camera_initial_position
+	Engine.time_scale = 1
+	_stop_dices_animated_angular_velocity()
+
+
 func _instantiate_dices():
 	# Get dice positions for circular layout
 	var circular_layout = Layouts3D.get_circular_layout(
@@ -153,7 +184,7 @@ func _play_time_scale_animation():
 			# Wait
 			_time_scale_animation.tween_interval(slowdown_interval)
 			# Start slowdown
-			_time_scale_animation.tween_callback(func(): 
+			_time_scale_animation.tween_callback(func():
 				Engine.time_scale = slowdown_time_scale
 				slowdown_stream_player.play()
 				)
@@ -182,47 +213,10 @@ func _handle_time_scale_animation_final_slowdown(progress: float):
 func _animate_dices_results():
 	# Disable physics
 	Engine.time_scale = 1
-	for physical_dice in _physical_dices:
-		physical_dice.freeze = true
+	_freeze_dices()
 
-	# Compute dices result positions
-	var unpositioned_dices = _physical_dices.size()
-	var next_row_transform = Transform3D(result_origin.global_transform)
-	# Center vertical layouts
-	var dice_rows = (
-		_physical_dices.size() / result_max_row_elements + 
-		(1 if _physical_dices.size() % result_max_row_elements != 0 
-		else 0)
-	)
-	var centering_offset = (dice_rows - 1) * result_layout.spacing / 2
-	next_row_transform.origin += (result_origin.global_transform.basis.y * centering_offset)
 	# Make a vertical layout for each row and store the positions
-	var dice_result_positions = []
-	while unpositioned_dices != 0:
-		var row_positions
-		# Create a copy to override needed parameters
-		var current_horizontal_layout = HorizontalLayout3DParameters.create_copy(result_layout)
-		# Full row
-		if unpositioned_dices > result_max_row_elements:
-			# Compute row positions
-			row_positions = Layouts3D.get_horizontal_layout(
-				next_row_transform, result_max_row_elements, current_horizontal_layout
-			)
-			# Progress variables
-			unpositioned_dices -= result_max_row_elements
-			next_row_transform.origin += (
-				-result_origin.global_transform.basis.y * result_layout.spacing
-			)
-		# Uncomplete row
-		else:
-			# Compute last row positions
-			row_positions = Layouts3D.get_horizontal_layout(
-				next_row_transform, unpositioned_dices, current_horizontal_layout
-			)
-			unpositioned_dices = 0
-
-		# Add new positions
-		dice_result_positions.append_array(row_positions)
+	var dice_result_positions = _get_dice_result_positions()
 
 	# Animate dices
 	for i in _physical_dices.size():
@@ -234,18 +228,9 @@ func _animate_dices_results():
 		position_tween.tween_property(
 			_physical_dices[i], "position", dice_result_positions[i], result_animation_duration
 		)
-		# Compute dice result local transform
-		var dice_result_local_rotation = _physical_dices[i].result_rotations[
-			dice_roll_result.result[i].dice_result
-		]
-		var dice_result_local_basis = Basis.from_euler(
-			dice_result_local_rotation * PI / 180.0, EULER_ORDER_XYZ
-		)
-		var dice_result_local_transform = Transform3D(dice_result_local_basis, Vector3.ZERO)
+		_dice_position_tweens.append(position_tween)
 		# Compute dice "camera look at" transform
-		var dice_result_transform = _get_dice_result_transform(dice_result_positions[i])
-		# Add transforms for final rotation
-		var final_transform = dice_result_transform * dice_result_local_transform
+		var dice_result_transform = _get_dice_result_transform(i, dice_result_positions)
 		# Animate final rotation
 		var rotation_tween = _physical_dices[i].create_tween()
 		rotation_tween.tween_interval(result_rotation_delay)
@@ -253,10 +238,14 @@ func _animate_dices_results():
 		rotation_tween.tween_property(
 			_physical_dices[i],
 			"quaternion",
-			final_transform.basis.get_rotation_quaternion(),
+			dice_result_transform.basis.get_rotation_quaternion(),
 			result_rotation_duration
 		)
-		rotation_tween.tween_callback(func(): animation_ended.emit())
+		rotation_tween.tween_callback(func():
+			_animating = false
+			animation_ended.emit()
+			)
+		_dice_rotation_tweens.append(rotation_tween)
 
 	# Animate camera
 	_camera_animation = camera.create_tween()
@@ -267,19 +256,91 @@ func _animate_dices_results():
 	)
 
 
-func _get_dice_result_transform(dice_position: Vector3):
+func _skip_animation():
+	# Reset everythig
+	_reset()
+	# Disable physics
+	_freeze_dices()
+	# Position camera
+	camera.position = camera_result_position
+	# Position and rotate dices
+	var dice_result_positions = _get_dice_result_positions()
+	for i in _physical_dices.size():
+		_physical_dices[i].transform = _get_dice_result_transform(i, dice_result_positions)
+	# End animation
+	_animating = false
+	animation_ended.emit()
+
+
+func _get_dice_result_positions() -> Array[Vector3]:
+	# Initialize variables for computation
+	var dice_result_positions: Array[Vector3] = []
+	var unpositioned_dices = _physical_dices.size()
+	var next_row_transform = Transform3D(result_origin.global_transform)
+	# Center vertical layouts
+	var dice_rows = (
+		_physical_dices.size() / result_max_row_elements
+		+ (1 if _physical_dices.size() % result_max_row_elements != 0 else 0)
+	)
+	var centering_offset = (dice_rows - 1) * result_layout.spacing / 2
+	next_row_transform.origin += (result_origin.global_transform.basis.y * centering_offset)
+
+	# Compute positions
+	while unpositioned_dices != 0:
+		var row_positions
+		# Full row
+		if unpositioned_dices > result_max_row_elements:
+			# Compute row positions
+			row_positions = Layouts3D.get_horizontal_layout(
+				next_row_transform, result_max_row_elements, result_layout
+			)
+			# Progress variables
+			unpositioned_dices -= result_max_row_elements
+			next_row_transform.origin += (
+				-result_origin.global_transform.basis.y * result_layout.spacing
+			)
+		# Uncomplete row
+		else:
+			# Compute last row positions
+			row_positions = Layouts3D.get_horizontal_layout(
+				next_row_transform, unpositioned_dices, result_layout
+			)
+			unpositioned_dices = 0
+
+		# Add new positions
+		dice_result_positions.append_array(row_positions)
+
+	return dice_result_positions
+
+
+func _get_dice_result_transform(dice_index: int, dice_positions: Array[Vector3]):
+	# Compute dice result local transform
+	var dice_result_local_rotation = _physical_dices[dice_index].result_rotations[
+		dice_roll_result.result[dice_index].dice_result
+	]
+	var dice_result_local_basis = Basis.from_euler(
+		dice_result_local_rotation * PI / 180.0, EULER_ORDER_XYZ
+	)
+	var dice_result_local_transform = Transform3D(dice_result_local_basis, Vector3.ZERO)
+
 	# Create "LOOK_IN_CAMERA_DIRECTION" transform
-	var dice_result_transform = Transform3D(camera.basis, dice_position)
+	var dice_result_layout_transform = Transform3D(camera.basis, dice_positions[dice_index])
 
 	# Override if result_orientation is "LOOK_AT_CAMERA"
 	if result_orientation == ResultOrientation.LOOK_AT_CAMERA:
-		dice_result_transform = dice_result_transform.looking_at(
+		dice_result_layout_transform = dice_result_layout_transform.looking_at(
 			camera_result_position, camera.basis.y, true
 		)
 
-	return dice_result_transform
+	# Add transforms for final rotation
+	return dice_result_layout_transform * dice_result_local_transform
 
 
 func _stop_dices_animated_angular_velocity():
 	for i in _physical_dices.size():
 		_physical_dices[i].animated_angular_velocity = Vector3.ZERO
+
+
+func _freeze_dices():
+	for physical_dice in _physical_dices:
+		physical_dice.freeze = true
