@@ -25,7 +25,7 @@ enum ResultOrientation { LOOK_AT_CAMERA, LOOK_IN_CAMERA_DIRECTION }
 @export var generic_collision_layer: int = 1
 @export var throw_force: float
 @export var throw_force_random_variation: float
-@export var throw_torque_range: float
+@export var throw_torque_random_range: float
 @export_subgroup("Critical")
 @export var critical: bool
 @export var slowdown_time_scale: float
@@ -155,9 +155,9 @@ func _throw_dices():
 			)
 		)
 		physical_dice.angular_velocity = (Vector3(
-			randf_range(-throw_torque_range, throw_torque_range),
-			randf_range(-throw_torque_range, throw_torque_range),
-			randf_range(-throw_torque_range, throw_torque_range)
+			randf_range(-throw_torque_random_range, throw_torque_random_range),
+			randf_range(-throw_torque_random_range, throw_torque_random_range),
+			randf_range(-throw_torque_random_range, throw_torque_random_range)
 		))
 
 
