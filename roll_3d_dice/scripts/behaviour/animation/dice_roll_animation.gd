@@ -68,16 +68,21 @@ func set_critical(value: bool):
 
 func start_animation():
 	if dice_roll_result.result.size() > 0:
+		# Sort dices
+		dice_roll_result.sort_by_dice_type()
+		# Reset everything
 		if _camera_animation != null && _camera_animation.is_valid():
 			_camera_animation.kill()
 		camera.position = _camera_initial_position
+		if _time_scale_animation != null && _time_scale_animation.is_valid():
+			_time_scale_animation.kill()
+		Engine.time_scale = 1
+		# Start animation
 		_destroy_dices()
 		_instantiate_dices()
 		_throw_dices()
-		Engine.time_scale = 1
-		if _time_scale_animation != null && _time_scale_animation.is_valid():
-			_time_scale_animation.kill()
 		_play_time_scale_animation()
+		# Emit event
 		animation_started.emit()
 
 
