@@ -41,6 +41,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="DiceRollAnimation" parent="DiceRollAnimationRender" instance=ExtResource("5_lqj4j")]
+handle_input_locally = false
+render_target_update_mode = 4
 
 [node name="Input" type="Control" parent="."]
 layout_mode = 1

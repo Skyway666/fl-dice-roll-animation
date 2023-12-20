@@ -256,7 +256,9 @@ func _skip_animation():
 	_reset()
 	# Disable physics
 	_freeze_dices()
-	# Position camera
+	# Wait for a frame
+	await get_tree().process_frame
+	# Position camera0
 	camera.position = camera_result_position
 	# Position and rotate dices
 	var dice_result_positions = _get_dice_result_positions()
