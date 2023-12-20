@@ -95,8 +95,27 @@ theme_override_font_sizes/font_size = 20
 button_pressed = true
 text = "Critical"
 
+[node name="SkipCallToAction" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -632.0
+offset_top = -459.0
+offset_right = -460.0
+offset_bottom = -414.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "Click to skip"
+
 [connection signal="animation_ended" from="DiceRollAnimationRender/DiceRollAnimation" to="Input" method="show"]
+[connection signal="animation_ended" from="DiceRollAnimationRender/DiceRollAnimation" to="SkipCallToAction" method="hide"]
 [connection signal="animation_started" from="DiceRollAnimationRender/DiceRollAnimation" to="Input" method="hide"]
+[connection signal="animation_started" from="DiceRollAnimationRender/DiceRollAnimation" to="SkipCallToAction" method="show"]
 [connection signal="pressed" from="Input/DiceResultsUI/Add" to="." method="on_add"]
 [connection signal="pressed" from="Input/DiceResultsUI/Remove" to="." method="on_remove"]
 [connection signal="pressed" from="Input/RollButton" to="DiceRollAnimationRender/DiceRollAnimation" method="start_animation"]
