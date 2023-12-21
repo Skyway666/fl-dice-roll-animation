@@ -192,16 +192,6 @@ text = "Non critical duration"
 custom_minimum_size = Vector2(100, 0)
 value = 1.5
 
-[node name="FinalSlowdownDuration" parent="Input/AnimationParameters/VLayout" instance=ExtResource("6_7mh4d")]
-layout_mode = 2
-
-[node name="ParameterName" parent="Input/AnimationParameters/VLayout/FinalSlowdownDuration" index="0"]
-text = "Final slowdown duration"
-
-[node name="ParameterInput" parent="Input/AnimationParameters/VLayout/FinalSlowdownDuration" index="1"]
-custom_minimum_size = Vector2(100, 0)
-value = 1.0
-
 [node name="Generic" type="Label" parent="Input/AnimationParameters/VLayout"]
 layout_mode = 2
 text = "Generic"
@@ -229,6 +219,16 @@ text = "Result rotation duration
 [node name="ParameterInput" parent="Input/AnimationParameters/VLayout/ResultRotationDuration" index="1"]
 custom_minimum_size = Vector2(100, 0)
 value = 0.5
+
+[node name="FinalSlowdownDuration" parent="Input/AnimationParameters/VLayout" instance=ExtResource("6_7mh4d")]
+layout_mode = 2
+
+[node name="ParameterName" parent="Input/AnimationParameters/VLayout/FinalSlowdownDuration" index="0"]
+text = "Final slowdown duration"
+
+[node name="ParameterInput" parent="Input/AnimationParameters/VLayout/FinalSlowdownDuration" index="1"]
+custom_minimum_size = Vector2(100, 0)
+value = 1.0
 
 [node name="SkipCallToAction" type="Label" parent="."]
 visible = false
@@ -260,15 +260,15 @@ text = "Click to skip"
 [connection signal="value_changed" from="Input/AnimationParameters/VLayout/SlowdownDurationInput/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_slowdown_duration"]
 [connection signal="value_changed" from="Input/AnimationParameters/VLayout/SlowdownIntervalInput/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_slowdown_interval"]
 [connection signal="value_changed" from="Input/AnimationParameters/VLayout/NonCriticalDuration/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_non_critical_duration"]
-[connection signal="value_changed" from="Input/AnimationParameters/VLayout/FinalSlowdownDuration/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_final_slowdown_duration"]
 [connection signal="value_changed" from="Input/AnimationParameters/VLayout/ResultAnimationDuration/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_result_animation_duration"]
 [connection signal="value_changed" from="Input/AnimationParameters/VLayout/ResultRotationDuration/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_result_rotation_duration"]
+[connection signal="value_changed" from="Input/AnimationParameters/VLayout/FinalSlowdownDuration/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_final_slowdown_duration"]
 
 [editable path="Input/AnimationParameters/VLayout/SlowdownTimeScaleInput"]
 [editable path="Input/AnimationParameters/VLayout/SlowdownsInput"]
 [editable path="Input/AnimationParameters/VLayout/SlowdownDurationInput"]
 [editable path="Input/AnimationParameters/VLayout/SlowdownIntervalInput"]
 [editable path="Input/AnimationParameters/VLayout/NonCriticalDuration"]
-[editable path="Input/AnimationParameters/VLayout/FinalSlowdownDuration"]
 [editable path="Input/AnimationParameters/VLayout/ResultAnimationDuration"]
 [editable path="Input/AnimationParameters/VLayout/ResultRotationDuration"]
+[editable path="Input/AnimationParameters/VLayout/FinalSlowdownDuration"]
