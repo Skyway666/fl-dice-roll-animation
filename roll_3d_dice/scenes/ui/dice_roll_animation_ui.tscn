@@ -247,11 +247,6 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 30
 text = "Click to skip"
 
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
 [connection signal="animation_ended" from="DiceRollAnimationRender/DiceRollAnimation" to="Input" method="show"]
 [connection signal="animation_ended" from="DiceRollAnimationRender/DiceRollAnimation" to="SkipCallToAction" method="hide"]
 [connection signal="animation_started" from="DiceRollAnimationRender/DiceRollAnimation" to="Input" method="hide"]
