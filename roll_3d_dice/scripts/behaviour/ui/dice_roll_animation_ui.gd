@@ -18,7 +18,7 @@ func _ready():
 
 
 # UI Callbacks
-func on_add():
+func on_add_dice():
 	# Instantiate roll result UI
 	var new_roll_result_ui = dice_roll_ui.instantiate()
 	dice_roll_uis.append(new_roll_result_ui)
@@ -45,8 +45,9 @@ func on_dice_result_set(new_value: int, roll_result_id: int):
 	dice_roll_result.result[roll_result_id].dice_result = new_value
 
 
-func on_remove():
+func on_remove_dice():
 	if !dice_roll_uis.is_empty():
 		dice_roll_uis[dice_roll_uis.size() - 1].queue_free()
 		dice_roll_uis.pop_back()
 		dice_roll_result.result.pop_back()
+

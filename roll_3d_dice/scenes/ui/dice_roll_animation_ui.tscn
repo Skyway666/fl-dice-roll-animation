@@ -1,10 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://bwiw3ssnoab66"]
+[gd_scene load_steps=8 format=3 uid="uid://bwiw3ssnoab66"]
 
 [ext_resource type="Script" path="res://roll_3d_dice/scripts/behaviour/ui/dice_roll_animation_ui.gd" id="1_2vt5b"]
 [ext_resource type="PackedScene" uid="uid://dlou2h2p7iwcx" path="res://roll_3d_dice/scenes/ui/dice_roll_ui.tscn" id="1_jt7fy"]
 [ext_resource type="Resource" uid="uid://q8vgrysyh3th" path="res://roll_3d_dice/assets/data/dice_roll_result.tres" id="3_s53re"]
 [ext_resource type="Texture2D" uid="uid://o1ccr88acprb" path="res://_placeholders/game_background_placeholder.jpg" id="4_ikvpr"]
 [ext_resource type="PackedScene" uid="uid://u4wfd8g6qr4k" path="res://roll_3d_dice/scenes/scenarios/dice_roll_animation.tscn" id="5_lqj4j"]
+[ext_resource type="PackedScene" uid="uid://cfxwy4qrvq71q" path="res://roll_3d_dice/scenes/ui/dice_roll_animation_numerical_parameter.tscn" id="6_7mh4d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vexfh"]
+bg_color = Color(0, 0, 0, 0.501961)
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
 
 [node name="DiceRollAnimationUI" type="Control" node_paths=PackedStringArray("dice_results_ui")]
 layout_mode = 3
@@ -68,19 +76,6 @@ text = "Add"
 layout_mode = 2
 text = "Remove"
 
-[node name="RollButton" type="Button" parent="Input"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 50.0
-offset_top = -135.0
-offset_right = 175.0
-offset_bottom = -50.0
-grow_vertical = 0
-theme_override_font_sizes/font_size = 56
-text = "Roll "
-
 [node name="CheckBox" type="CheckBox" parent="Input"]
 layout_mode = 1
 anchors_preset = 2
@@ -94,6 +89,146 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 20
 button_pressed = true
 text = "Critical"
+
+[node name="RollButton" type="Button" parent="Input"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -135.0
+offset_right = 175.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 56
+text = "Roll "
+
+[node name="AnimationParameters" type="PanelContainer" parent="Input"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -358.0
+offset_top = 50.0
+offset_right = -49.0
+offset_bottom = 446.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_vexfh")
+
+[node name="VLayout" type="VBoxContainer" parent="Input/AnimationParameters"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="Input/AnimationParameters/VLayout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Animation parameters"
+
+[node name="HSeparator1" type="HSeparator" parent="Input/AnimationParameters/VLayout"]
+layout_mode = 2
+
+[node name="CriticalLabel" type="Label" parent="Input/AnimationParameters/VLayout"]
+layout_mode = 2
+text = "Critical"
+
+[node name="HSeparator2" type="HSeparator" parent="Input/AnimationParameters/VLayout"]
+layout_mode = 2
+
+[node name="SlowdownTimeScaleInput" parent="Input/AnimationParameters/VLayout" instance=ExtResource("6_7mh4d")]
+layout_mode = 2
+
+[node name="ParameterName" parent="Input/AnimationParameters/VLayout/SlowdownTimeScaleInput" index="0"]
+text = "Slowdown time scale"
+
+[node name="ParameterInput" parent="Input/AnimationParameters/VLayout/SlowdownTimeScaleInput" index="1"]
+custom_minimum_size = Vector2(100, 0)
+value = 0.1
+
+[node name="SlowdownsInput" parent="Input/AnimationParameters/VLayout" instance=ExtResource("6_7mh4d")]
+layout_mode = 2
+
+[node name="ParameterName" parent="Input/AnimationParameters/VLayout/SlowdownsInput" index="0"]
+text = "Slowdowns"
+
+[node name="ParameterInput" parent="Input/AnimationParameters/VLayout/SlowdownsInput" index="1"]
+custom_minimum_size = Vector2(100, 0)
+step = 1.0
+value = 1.0
+
+[node name="SlowdownDurationInput" parent="Input/AnimationParameters/VLayout" instance=ExtResource("6_7mh4d")]
+layout_mode = 2
+
+[node name="ParameterName" parent="Input/AnimationParameters/VLayout/SlowdownDurationInput" index="0"]
+text = "Slowdown duration"
+
+[node name="ParameterInput" parent="Input/AnimationParameters/VLayout/SlowdownDurationInput" index="1"]
+custom_minimum_size = Vector2(100, 0)
+value = 0.8
+
+[node name="SlowdownIntervalInput" parent="Input/AnimationParameters/VLayout" instance=ExtResource("6_7mh4d")]
+layout_mode = 2
+
+[node name="ParameterName" parent="Input/AnimationParameters/VLayout/SlowdownIntervalInput" index="0"]
+text = "Slowdown interval"
+
+[node name="ParameterInput" parent="Input/AnimationParameters/VLayout/SlowdownIntervalInput" index="1"]
+custom_minimum_size = Vector2(100, 0)
+value = 1.0
+
+[node name="NonCriticalLabel" type="Label" parent="Input/AnimationParameters/VLayout"]
+layout_mode = 2
+text = "Non critical"
+
+[node name="HSeparator3" type="HSeparator" parent="Input/AnimationParameters/VLayout"]
+layout_mode = 2
+
+[node name="NonCriticalDuration" parent="Input/AnimationParameters/VLayout" instance=ExtResource("6_7mh4d")]
+layout_mode = 2
+
+[node name="ParameterName" parent="Input/AnimationParameters/VLayout/NonCriticalDuration" index="0"]
+text = "Non critical duration"
+
+[node name="ParameterInput" parent="Input/AnimationParameters/VLayout/NonCriticalDuration" index="1"]
+custom_minimum_size = Vector2(100, 0)
+value = 1.5
+
+[node name="FinalSlowdownDuration" parent="Input/AnimationParameters/VLayout" instance=ExtResource("6_7mh4d")]
+layout_mode = 2
+
+[node name="ParameterName" parent="Input/AnimationParameters/VLayout/FinalSlowdownDuration" index="0"]
+text = "Final slowdown duration"
+
+[node name="ParameterInput" parent="Input/AnimationParameters/VLayout/FinalSlowdownDuration" index="1"]
+custom_minimum_size = Vector2(100, 0)
+value = 1.0
+
+[node name="Generic" type="Label" parent="Input/AnimationParameters/VLayout"]
+layout_mode = 2
+text = "Generic"
+
+[node name="HSeparator4" type="HSeparator" parent="Input/AnimationParameters/VLayout"]
+layout_mode = 2
+
+[node name="ResultAnimationDuration" parent="Input/AnimationParameters/VLayout" instance=ExtResource("6_7mh4d")]
+layout_mode = 2
+
+[node name="ParameterName" parent="Input/AnimationParameters/VLayout/ResultAnimationDuration" index="0"]
+text = "Result animation duration"
+
+[node name="ParameterInput" parent="Input/AnimationParameters/VLayout/ResultAnimationDuration" index="1"]
+custom_minimum_size = Vector2(100, 0)
+value = 1.5
+
+[node name="ResultRotationDuration" parent="Input/AnimationParameters/VLayout" instance=ExtResource("6_7mh4d")]
+layout_mode = 2
+
+[node name="ParameterName" parent="Input/AnimationParameters/VLayout/ResultRotationDuration" index="0"]
+text = "Result rotation duration
+"
+
+[node name="ParameterInput" parent="Input/AnimationParameters/VLayout/ResultRotationDuration" index="1"]
+custom_minimum_size = Vector2(100, 0)
+value = 0.5
 
 [node name="SkipCallToAction" type="Label" parent="."]
 visible = false
@@ -112,11 +247,33 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 30
 text = "Click to skip"
 
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [connection signal="animation_ended" from="DiceRollAnimationRender/DiceRollAnimation" to="Input" method="show"]
 [connection signal="animation_ended" from="DiceRollAnimationRender/DiceRollAnimation" to="SkipCallToAction" method="hide"]
 [connection signal="animation_started" from="DiceRollAnimationRender/DiceRollAnimation" to="Input" method="hide"]
 [connection signal="animation_started" from="DiceRollAnimationRender/DiceRollAnimation" to="SkipCallToAction" method="show"]
-[connection signal="pressed" from="Input/DiceResultsUI/Add" to="." method="on_add"]
-[connection signal="pressed" from="Input/DiceResultsUI/Remove" to="." method="on_remove"]
-[connection signal="pressed" from="Input/RollButton" to="DiceRollAnimationRender/DiceRollAnimation" method="start_animation"]
+[connection signal="pressed" from="Input/DiceResultsUI/Add" to="." method="on_add_dice"]
+[connection signal="pressed" from="Input/DiceResultsUI/Remove" to="." method="on_remove_dice"]
 [connection signal="toggled" from="Input/CheckBox" to="DiceRollAnimationRender/DiceRollAnimation" method="set_critical"]
+[connection signal="pressed" from="Input/RollButton" to="DiceRollAnimationRender/DiceRollAnimation" method="start_animation"]
+[connection signal="value_changed" from="Input/AnimationParameters/VLayout/SlowdownTimeScaleInput/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_slowdown_time_scale"]
+[connection signal="value_changed" from="Input/AnimationParameters/VLayout/SlowdownsInput/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_slowdowns"]
+[connection signal="value_changed" from="Input/AnimationParameters/VLayout/SlowdownDurationInput/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_slowdown_duration"]
+[connection signal="value_changed" from="Input/AnimationParameters/VLayout/SlowdownIntervalInput/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_slowdown_interval"]
+[connection signal="value_changed" from="Input/AnimationParameters/VLayout/NonCriticalDuration/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_non_critical_duration"]
+[connection signal="value_changed" from="Input/AnimationParameters/VLayout/FinalSlowdownDuration/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_final_slowdown_duration"]
+[connection signal="value_changed" from="Input/AnimationParameters/VLayout/ResultAnimationDuration/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_result_animation_duration"]
+[connection signal="value_changed" from="Input/AnimationParameters/VLayout/ResultRotationDuration/ParameterInput" to="DiceRollAnimationRender/DiceRollAnimation" method="set_result_rotation_duration"]
+
+[editable path="Input/AnimationParameters/VLayout/SlowdownTimeScaleInput"]
+[editable path="Input/AnimationParameters/VLayout/SlowdownsInput"]
+[editable path="Input/AnimationParameters/VLayout/SlowdownDurationInput"]
+[editable path="Input/AnimationParameters/VLayout/SlowdownIntervalInput"]
+[editable path="Input/AnimationParameters/VLayout/NonCriticalDuration"]
+[editable path="Input/AnimationParameters/VLayout/FinalSlowdownDuration"]
+[editable path="Input/AnimationParameters/VLayout/ResultAnimationDuration"]
+[editable path="Input/AnimationParameters/VLayout/ResultRotationDuration"]

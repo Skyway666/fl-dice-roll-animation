@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cfxwy4qrvq71q"]
+
+[node name="DiceRollAnimationNumericalParameter" type="Control"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 220.0
+offset_bottom = 31.0
+
+[node name="ParameterName" type="Label" parent="."]
+layout_mode = 1
+offset_top = 2.0
+offset_right = 129.0
+offset_bottom = 28.0
+text = "ParameterName"
+
+[node name="ParameterInput" type="SpinBox" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -83.0625
+offset_bottom = 31.0
+grow_horizontal = 0
+step = 0.0
+update_on_text_changed = true

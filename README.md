@@ -6,3 +6,4 @@
 - Remove: Removes the last dice from the list.
 - Critical: If sets to true, represents an animation for a critical roll.
 - Roll: Starts the animation if there are dices to roll.
+- Click during animation: Skips animation

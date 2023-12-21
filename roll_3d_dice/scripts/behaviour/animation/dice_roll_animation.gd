@@ -26,15 +26,14 @@ enum ResultOrientation { LOOK_AT_CAMERA, LOOK_IN_CAMERA_DIRECTION }
 @export var throw_force: float
 @export var throw_force_random_variation: float
 @export var throw_torque_random_range: float
-@export_subgroup("Critical")
+@export_subgroup("Duration")
 @export var critical: bool
 @export var slowdown_time_scale: float
 @export var slowdowns: int
 @export var slowdown_duration: float
 @export var slowdown_interval: float
 @export var slowdown_stream_player: AudioStreamPlayer
-@export_subgroup("Physics animation")
-@export var physics_duration: float
+@export var non_critical_duration: float
 @export var final_slowdown_duration: float
 @export_subgroup("Result distribution")
 @export var result_origin: Node3D
@@ -42,7 +41,6 @@ enum ResultOrientation { LOOK_AT_CAMERA, LOOK_IN_CAMERA_DIRECTION }
 @export var result_layout: HorizontalLayout3DParameters
 @export_subgroup("Result animation")
 @export var result_animation_duration: float
-@export var result_rotation_delay: float
 @export var result_rotation_duration: float
 @export var result_orientation: ResultOrientation
 @export var dice_animated_angular_velocity: Vector3
@@ -77,6 +75,38 @@ func _input(event):
 # Public methods
 func set_critical(value: bool):
 	critical = value
+
+
+func set_slowdown_time_scale(value: float):
+	slowdown_time_scale = value
+
+
+func set_slowdowns(value: int):
+	slowdowns = value
+
+
+func set_slowdown_duration(value: float):
+	slowdown_duration = value
+
+
+func set_slowdown_interval(value: float):
+	slowdown_interval = value
+
+
+func set_non_critical_duration(value: float):
+	non_critical_duration = value
+
+
+func set_final_slowdown_duration(value: float):
+	final_slowdown_duration = value
+
+
+func set_result_animation_duration(value: float):
+	result_animation_duration = value
+
+
+func set_result_rotation_duration(value: float):
+	result_rotation_duration = value
 
 
 func start_animation():
@@ -171,8 +201,6 @@ func _on_dice_entered_roll_zone(body):
 func _play_time_scale_animation():
 	# Dices animation
 	_time_scale_animation = create_tween()
-	var animation_duration = physics_duration
-
 	# Add slowdowns to animation
 	if critical:
 		for i in slowdowns:
@@ -187,11 +215,10 @@ func _play_time_scale_animation():
 			_time_scale_animation.tween_interval(slowdown_duration * slowdown_time_scale)
 			# Stop slowdown
 			_time_scale_animation.tween_callback(func(): Engine.time_scale = 1)
-			# Remove spent time from animation duration
-			animation_duration -= (slowdown_interval + slowdown_duration)
+	# Let dices bounce for "non_critical_duration"
+	else:
+		_time_scale_animation.tween_interval(non_critical_duration)
 
-	# Let dices bounce for "animation_duration"
-	_time_scale_animation.tween_interval(animation_duration)
 	# Slowly get them to stop
 	_time_scale_animation.tween_method(
 		_handle_time_scale_animation_final_slowdown, 1.0, 0.01, final_slowdown_duration
@@ -228,7 +255,7 @@ func _animate_dices_results():
 		var dice_result_transform = _get_dice_result_transform(i, dice_result_positions)
 		# Animate final rotation
 		var rotation_tween = _physical_dices[i].create_tween()
-		rotation_tween.tween_interval(result_rotation_delay)
+		rotation_tween.tween_interval(result_animation_duration - result_rotation_duration)
 		rotation_tween.tween_callback(_stop_dices_animated_angular_velocity)
 		rotation_tween.tween_property(
 			_physical_dices[i],
